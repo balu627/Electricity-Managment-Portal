@@ -13,24 +13,30 @@
     String custName = (String) session.getAttribute("custName");
     String email = (String) session.getAttribute("email");
 %>
-<!DOCTYPE html>
+<%@ page import="java.util.*, bean.ComplaintRegistration" %>     <%
+     List<ComplaintRegistration> list1 = (List<ComplaintRegistration>) request.getAttribute("PendingComplaints");
+     List<ComplaintRegistration> list2 = (List<ComplaintRegistration>) request.getAttribute("solvedComplaints");
+%>
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Customer Home</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>complaint history </title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-    <style>
+
+<style>
         body {
             font-family: 'Bree Serif', serif;
             margin: 0;
+            line-height: 1.6;
             background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl2e6phZYZ5_SO0KCIPgB2doz9WrsJvIOD_g&s");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            height:100vh;
+            
         }
         .topbar {
             background-color: #004466;
@@ -97,18 +103,75 @@
         .user-info button:hover {
             background-color: #e60000;
         }
-        .welcome-container {
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.9);
-            margin: 50px auto;
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
         }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            box-shadow: 10px 10px rgba(92, 87, 87, 0.2);
+            background-color: #f5f5f5;
+            margin-left:170px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2e4053;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: white;
+        }
+
+        tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        #tableContainer {
+            margin-top:30px;
+            height: 350px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        input[type="submit"] {
+            margin-top:30px;
+            background-color: #2e4053;
+            color: white;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 20%;
+            position:relative;
+            left:40%;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 20px;
+            font-family: "Lexend", sans-serif;
+            transition: background-color 0.5s;
+            letter-spacing: 1px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+            box-shadow: 0px 5px 5px 0px rgba(143, 148, 155, 0.2);
+        }
+
+
     </style>
 </head>
 <body>
-    <div class="topbar">
+<div class="topbar">
         <div class="menu">
             <div class="dropdown">
                 <a href="home.jsp">Home</a>
@@ -143,26 +206,79 @@
         </div>
     </div>
 
-    <div class="welcome-container">
-        <h2>Welcome to Your Electricity Account</h2>
-        <p>You can now manage your electricity services online.</p>
-        
-        <div id="dashboard" style="margin-top: 30px;">
-            <h3>Account Summary</h3>
-            <p><strong>User ID:</strong> <%= user %></p>
-            <% if(custName != null) { %>
-                <p><strong>Name:</strong> <%= custName %></p>
-            <% } %>
-            <% if(email != null) { %>
-                <p><strong>Email:</strong> <%= email %></p>
-            <% } %>
-        </div>
-    </div>
-
-    <script type="text/javascript">
+  <h2>Pending Complaint History</h2>
+  
+      <%
+            if (list1 == null) {
+        %>
+            <p>No complaints </p>
+        <%
+            } else {
+        %>
+    
+    <h3> Complaints</h3>
+    <table border="1">
+      <tr><th>ID</th><th>Type</th><th>Category</th><th>Contact</th><th>Status</th></tr>
+      <%
+        for (ComplaintRegistration c : list1) {
+          
+      %>
+        <tr>
+          <td><%= c.getComplaintid() %></td>
+          <td><%= c.getType() %></td>
+          <td><%= c.getCategory() %></td>
+          <td><%= c.getContactperson() %></td>
+          <td><%= c.getStatus() %></td>
+        </tr>
+      <%
+          
+        }
+      %>
+    </table>
+   <%
+          
+        }
+      %>
+      
+      
+      <h2>Solved Complaint History</h2>
+  
+      <%
+            if (list1 == null) {
+        %>
+            <p>No complaints </p>
+        <%
+            } else {
+        %>
+    
+    <h3> Solved Complaints</h3>
+    <table border="1">
+      <tr><th>ID</th><th>Type</th><th>Category</th><th>Contact</th><th>Status</th></tr>
+      <%
+        for (ComplaintRegistration c : list2) {
+          
+      %>
+        <tr>
+          <td><%= c.getComplaintid() %></td>
+          <td><%= c.getType() %></td>
+          <td><%= c.getCategory() %></td>
+          <td><%= c.getContactperson() %></td>
+          <td><%= c.getStatus() %></td>
+        </tr>
+      <%
+          
+        }
+      %>
+    </table>
+   <%
+          
+        }
+      %>
+ <script type="text/javascript">
         function logout() {
             window.location.href = 'LogoutServlet';
         }
     </script>
+  
 </body>
-</html> 
+</html>

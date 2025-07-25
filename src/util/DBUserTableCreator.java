@@ -12,7 +12,7 @@ public class DBUserTableCreator {
         try {
             con = DBConnection.getConnection();
             stmt = con.createStatement();
-            String sql = "CREATE TABLE CustomerData (consumerId BIGINT PRIMARY KEY,billNo BIGINT UNIQUE,title VARCHAR(10),name VARCHAR(50),age INT,email VARCHAR(100),mobile BIGINT,userId VARCHAR(50),password VARCHAR(50),status VARCHAR(20))";
+            String sql = "CREATE TABLE CustomerData (consumerId BIGINT PRIMARY KEY,billNo BIGINT UNIQUE,title VARCHAR(10),name VARCHAR(50),age INT,email VARCHAR(100),countryCode VARCHAR(20),mobile BIGINT,address VARCHAR(250),userId VARCHAR(50),password VARCHAR(50),status VARCHAR(20))";
             stmt.executeUpdate(sql);
             System.out.println("User table created successfully!");
         } catch (SQLException e) {

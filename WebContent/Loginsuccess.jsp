@@ -22,20 +22,26 @@
     }
 </style>
 
-<script>
-
-    setTimeout(function() {
-        window.location.href = '<%= request.getAttribute("redirectPage") %>';
-    }, 2000);
-</script>
-
 </head>
 <body>
 
+<%
+    String msg = (String) request.getAttribute("message");
+    String redirectPage = (String) request.getAttribute("redirectPage");
+%>
+
 <div class="message-box">
-    <h2><%= request.getAttribute("message") %></h2>
+    <h2><%= msg %></h2>
     <p>Redirecting...</p>
 </div>
+
+<% if (redirectPage != null) { %>
+    <script>
+        setTimeout(function() {
+            window.location.href = "<%= redirectPage %>";
+        }, 2000);
+    </script>
+<% } %>
 
 </body>
 </html>

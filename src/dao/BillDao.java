@@ -14,20 +14,21 @@ import util.DBBillTableCreator;
 
 public class BillDao {
     public static int addBill(Bill bill) {
-    	System.out.println("hi");
         int status = 0;
         try {
             DBBillTableCreator.createBillTable();
             Connection con = DBConnection.getConnection();
-//
+
             String sql = "INSERT INTO Bill (consumerNo, amount, month, modeOfPayment, paymentTimeDate, transactionId, status) VALUES (?, ?, ?, NULL, NULL, NULL, 'unpaid')";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, bill.getConsumerNo());
             ps.setInt(2, bill.getAmount());
-            ps.setInt(3, bill.getMonth());
+            String monthInput = bill.getMonth() + "-01";
+            java.sql.Date sqlDate = java.sql.Date.valueOf(monthInput);
+            ps.setDate(3,sqlDate);
             status = ps.executeUpdate();
             con.close();
-//
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,37 +50,7 @@ public class BillDao {
         }
     }
 
-    public static void printAllBills() {
-        try {
-            Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM Bill";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            System.out.println("------------------------------------------------------------");
-            System.out.printf("%-8s %-12s %-8s %-10s %-15s %-15s %-15s %-8s\n",
-                    "BillNo", "consumerNo", "Amount", "Month", "ModeOfPayment", "paymentTimeDate", "transactionId", "Status");
-            System.out.println("------------------------------------------------------------");
-
-            while (rs.next()) {
-                System.out.printf("%-8d %-12s %-8d %-10s %-15s %-15s %-15s %-8s\n",
-                        rs.getInt("billNo"),
-                        rs.getString("consumerNo"),
-                        rs.getInt("amount"),
-                        rs.getInt("month"),
-                        rs.getString("modeOfPayment"),
-                        rs.getString("paymentTimeDate"),
-                        rs.getString("transactionId"),
-                        rs.getString("status"));
-            }
-
-            System.out.println("------------------------------------------------------------");
-
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+ 
     
     public static ResultSet getUnpaidBills(long user) {
         ResultSet rs = null;
@@ -164,8 +135,9 @@ public class BillDao {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.getDefault());
         String timeOnly = currentDateTime.format(timeFormatter);
         
-        String timedateformat = dateOnly+" "+timeOnly;
-        int month = Integer.parseInt(timedateformat.substring(5, 7));
+        String timedateformat = dateOnly;
+        String smonth = timedateformat.substring(0, 7);
+        
         long cid = user;
         ResultSet rs = null;
         try
@@ -174,7 +146,9 @@ public class BillDao {
             String sql = "SELECT * FROM Bill WHERE consumerNo = ? AND month <= ? AND  status = 'paid'  ORDER BY month  DESC";
             PreparedStatement ps = con.prepareStatement(sql);      
             ps.setLong(1, cid);
-            ps.setInt(2,month);
+            String monthInput = smonth + "-01";
+            java.sql.Date sqlDate = java.sql.Date.valueOf(monthInput);
+            ps.setDate(2,sqlDate);
             rs = ps.executeQuery();
             
        
@@ -188,18 +162,22 @@ public class BillDao {
         return rs;
     }
     
-    public static ResultSet getSpecifcPeriod(int fromMonth,int toMonth,long user)
+    public static ResultSet getSpecifcPeriod(String fromMonth,String toMonth,long user)
     {
         ResultSet rs = null;
     	try
     	{
     		Connection con = DBConnection.getConnection();
-    		String sql = "SELECT * FROM Bill WHERE consumerNo = ? AND month >= ? AND month<= ? AND status = 'paid'  ORDER BY month";
+    		String sql = "SELECT * FROM Bill WHERE consumerNo = ? AND month between ? AND ? AND status = 'paid'  ORDER BY month";
         	
         	PreparedStatement ps = con.prepareStatement(sql);   
         	ps.setLong(1, user);
-            ps.setInt(2,fromMonth);
-            ps.setInt(3,toMonth);
+        	String frommonthInput = fromMonth + "-01";
+            java.sql.Date fromsqlDate = java.sql.Date.valueOf(frommonthInput);
+            ps.setDate(2,fromsqlDate);
+            String tomonthInput = toMonth + "-01";
+            java.sql.Date tosqlDate = java.sql.Date.valueOf(tomonthInput);
+            ps.setDate(3,tosqlDate);
             rs = ps.executeQuery();
             return rs;
     	}

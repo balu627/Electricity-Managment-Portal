@@ -8,7 +8,9 @@ public class CustomerData {
     private String custName;
     private int age;
     private String email;
+    private String countryCode;
     private long mobile;
+    private String address;
     private String userId;
     private String password;
     private String status;
@@ -17,6 +19,7 @@ public class CustomerData {
     public long getConsumerId() {
         return consumerId;
     }
+    
 
     public void setConsumerId(long consumerId) {
         this.consumerId = consumerId;
@@ -61,6 +64,16 @@ public class CustomerData {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public String getCountryCode()
+    {
+    	return countryCode;
+    }
+    
+    public void setCountryCode(String countryCode)
+    {
+    	this.countryCode = countryCode;
+    }
 
     public long getMobile() {
         return mobile;
@@ -68,6 +81,15 @@ public class CustomerData {
 
     public void setMobile(long mobile) {
         this.mobile = mobile;
+    }
+    
+    public String getAddress()
+    {
+    	return address;
+    }
+    
+    public void setAddress(String address){
+    	this.address = address;
     }
 
     public String getUserId() {

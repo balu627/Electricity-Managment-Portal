@@ -4,7 +4,7 @@ public class Bill {
     private int billNo;
     private long consumerNo;
     private int amount;
-    private int month;
+    private String month;
     private String modeOfPayment;
     private String paymentTimeDate;
     private int transactionId;
@@ -31,10 +31,10 @@ public class Bill {
         this.amount = amount;
     }
 
-    public int getMonth() {
+    public String getMonth() {
         return month;
     }
-    public void setMonth(int month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 

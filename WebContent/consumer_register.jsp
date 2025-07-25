@@ -23,7 +23,7 @@
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
-      height: 100vh;
+      height: 100%;
     }
     
     .main {
@@ -251,6 +251,11 @@
                   <option value="+44">+44 UK</option>
                 </select>
                 <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" pattern="^[6-9]+\d{9}"  maxlength="10" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="address"><i class="zmdi zmdi-home"></i></label>
+                <input type="text" name="address" id="address" placeholder="Address" pattern="^.{5,250}$" minlength="5" maxlength="250" required />
               </div>
 
               <div class="form-group">

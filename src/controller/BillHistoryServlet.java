@@ -15,12 +15,25 @@ import javax.servlet.http.HttpSession;
 
 import bean.Bill;
 import dao.BillDao;
+import util.DBBillTableCreator;
 
 @WebServlet("/BillHistory")
 public class BillHistoryServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+		 response.setHeader("Pragma", "no-cache");
+		 response.setDateHeader("Expires", 0);
+		 
+		 HttpSession session = request.getSession();
+		 
+		    if (session  == null || session.getAttribute("user") == null) {
+		        response.sendRedirect("login.jsp");
+		        return;
+		    }
+		
+//		HttpSession session = request.getSession();
+		 DBBillTableCreator.createBillTable();
 		long user = Long.parseLong((String) session.getAttribute("consumerNo"));
 		List<Bill> paidBillsFiveMonths = new ArrayList<>();
 		ResultSet rs = BillDao.getPastFiveMonths(user);
@@ -29,7 +42,7 @@ public class BillHistoryServlet extends HttpServlet {
 			{
 				Bill temp = new Bill();
             	temp.setBillNo(rs.getInt("billNo"));
-            	temp.setMonth(rs.getInt("month"));
+            	temp.setMonth(rs.getDate("month").toString());
             	temp.setStatus(rs.getString("status"));
             	temp.setAmount(rs.getInt("amount"));
             	temp.setTransactionId(rs.getInt("transactionId"));

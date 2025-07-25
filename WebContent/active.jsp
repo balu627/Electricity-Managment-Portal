@@ -14,22 +14,34 @@ response.setDateHeader("Expires", 0);
     String name = (String) session.getAttribute("name");
     String email = (String) session.getAttribute("email");
 %>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
+    
+     <%@ page import="java.util.*, bean.ComplaintRegistration" %>
+     <%
+    
+     List<ComplaintRegistration> list = (List<ComplaintRegistration>) request.getAttribute("unsolved");
+%>
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+<meta charset="ISO-8859-1">
+    <title>Active Complaints</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <style>
+    
         body {
-            font-family: 'Bree Serif', serif;
+           font-family: 'Bree Serif', serif;
             margin: 0;
+            line-height: 1.6;
             background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl2e6phZYZ5_SO0KCIPgB2doz9WrsJvIOD_g&s");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            height:100vh;
+            
         }
         .topbar {
             background-color: #004466;
@@ -96,33 +108,75 @@ response.setDateHeader("Expires", 0);
         .user-info button:hover {
             background-color: #e60000;
         }
-        .welcome-container {
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.9);
-            margin: 50px auto;
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        .admin-features {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin-top: 30px;
-        }
-        .feature-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 10px;
-            width: 200px;
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            box-shadow: 10px 10px rgba(92, 87, 87, 0.2);
+            background-color: #f5f5f5;
+            margin-left:170px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2e4053;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: white;
+        }
+
+        tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        #tableContainer {
+            margin-top:30px;
+            height: 350px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        input[type="submit"] {
+            margin-top:30px;
+            background-color: #2e4053;
+            color: white;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 20%;
+            position:relative;
+            left:40%;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 20px;
+            font-family: "Lexend", sans-serif;
+            transition: background-color 0.5s;
+            letter-spacing: 1px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+            box-shadow: 0px 5px 5px 0px rgba(143, 148, 155, 0.2);
+        }
+
+
     </style>
 </head>
 <body>
-    <div class="topbar">
+<div class="topbar">
         <div class="menu">
             <div class="dropdown">
                 <a href="adminhome.jsp">Dashboard</a>
@@ -151,37 +205,50 @@ response.setDateHeader("Expires", 0);
         </div>
     </div>
 
-    <div class="welcome-container">
-        <h2>Admin Dashboard</h2>
-        <p>Manage all electricity portal operations from here.</p>
-        
-        <div id="stats" style="margin-top: 30px;">
-            <h3>Quick Stats</h3>
-            <div class="admin-features">
-    <div class="feature-card">
-        <i class="zmdi zmdi-accounts" style="font-size: 30px; color: #004466;"></i>
-        <h4>Total Consumers</h4>
-        <p><%= session.getAttribute("totalcust") %></p>
-    </div>
-    <div class="feature-card">
-        <i class="zmdi zmdi-alert-triangle" style="font-size: 30px; color: #004466;"></i>
-        <h4>Pending Complaints</h4>
-        <p><%= session.getAttribute("pendcomplaints") %></p>
-    </div>
-    <div class="feature-card">
-        <i class="zmdi zmdi-assignment" style="font-size: 30px; color: #004466;"></i>
-        <h4>Bills Generated</h4>
-        <p><%= session.getAttribute("billsGenerated") %></p>
-    </div>
-</div>
+<h2>Active Complaint History</h2>
+<% if (list == null) { %>
+    <p>No active complaints found.</p>
+<% } else { %>
+    <div id="tableContainer">
+    <table>
+        <tr><th>ID</th><th>Type</th><th>Category</th><th>Contact</th><th>Status</th></tr>
+        <% for (ComplaintRegistration c : list) { %>
+        <tr>
+            <td><%= c.getComplaintid() %></td>
+            <td><%= c.getType() %></td>
+            <td><%= c.getCategory() %></td>
+            <td><%= c.getContactperson() %></td>
+            <td><%= c.getStatus() %></td>
+        </tr>
+        <% } %>
 
-        </div>
+    </table>
     </div>
+<% } %>
 
+<!-- <form method="post" action="active">
+    <input type="submit" value="Get Active Complaints">
+</form> -->
+</body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script>
+       $(document).ready(function(){
+            var rowCount = $('tbody tr').length;
+            console.log(rowCount);
+            if (rowCount < 6 ) {
+                $("<style>", {id: "myStyle"}).appendTo("head");
+                $("#myStyle").html("#tableContainer { overflow: hidden; }");
+            }else {
+                $('#tableContainer').addClass('do-scroll');
+            }
+        });
+    </script>
+    
     <script type="text/javascript">
         function logout() {
             window.location.href = 'LogoutServlet';
         }
     </script>
-</body>
-</html>   
+
+</html>

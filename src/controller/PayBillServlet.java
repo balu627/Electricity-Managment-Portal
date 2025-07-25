@@ -15,13 +15,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//import org.apache.derby.client.am.ResultSet;
 
 
 @WebServlet("/PayBillServlet")
 public class PayBillServlet extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+		 response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+		 response.setDateHeader("Expires", 0);
+		 
+		 HttpSession session = request.getSession();
+		 
+		    if (session  == null || session.getAttribute("user") == null) {
+		        response.sendRedirect("login.jsp");
+		        return;
+		    }
+		
+		
 		String[] selectedBills = request.getParameterValues("billSelect");
 		
 		
@@ -41,7 +53,7 @@ public class PayBillServlet extends HttpServlet {
 			            	Bill temp = new Bill();
 			            	temp.setBillNo(rs.getInt("billNo"));
 			            	temp.setAmount(rs.getInt("amount"));
-			            	temp.setMonth(rs.getInt("month"));
+			            	temp.setMonth(rs.getDate("month").toString());
 			            	checkedbills.add(temp);
 			            }
 			        }

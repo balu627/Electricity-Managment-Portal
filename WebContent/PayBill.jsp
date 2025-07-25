@@ -1,5 +1,8 @@
 <%@ page session="true" %>
 <%
+response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); 
+response.setHeader("Pragma","no-cache"); 
+response.setDateHeader("Expires", 0);
     String user = (String) session.getAttribute("user");
     if (user == null) {
         response.sendRedirect("login.jsp");
@@ -22,18 +25,20 @@
 <style>
     body {
     	margin-top:0px;
+    	margin:0px;
+    	padding:0px;
     	padding-top:0px;
         font-family: "Lexend", sans-serif;
         background-color: #f5f5f5;
         line-height: 1.6;
-        margin: 20px;
         color: #333;
         background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl2e6phZYZ5_SO0KCIPgB2doz9WrsJvIOD_g&s");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
     }
-    .topbar {;
+    
+    .topbar {
             background-color: #004466;
             color: white;
             padding: 15px;
@@ -79,6 +84,27 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-info span {
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .user-info button {
+            padding: 6px 12px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .user-info button:hover {
+            background-color: #e60000;
+        }
+        
+        
     h2 {
         color: #2c3e50;
         border-bottom: 2px solid #3498db;
@@ -239,12 +265,13 @@
         margin-right: 5px;
     }
 
-    span {
-        color: #273746;
-        font-weight: 600;
-    }
+    .card-type span {
+    color: #273746;
+    font-weight: 600;
+}
+
     
-    button {
+    .paybtn {
         margin-top:10px;
         background-color: #2e4053;
         color: white;
@@ -283,15 +310,10 @@
         <div class="menu">
             <div class="dropdown">
                 <a href="home.jsp">Home</a>
-                <div class="dropdown-content">
-                    <a href="home.jsp#dashboard">Dashboard</a>
-                    <a href="home.jsp#notifications">Notifications</a>
-                    <a href="home.jsp#quicklinks">Quick Links</a>
-                </div>
             </div>
             
             <div class="dropdown">
-                <a href="paybill.jsp">Pay Bill</a>
+                <a href="viewBills">Bills</a>
                 <div class="dropdown-content">
                     <a href="viewBills">View Bill</a>
                     <a href="BillHistory">Payment History</a>
@@ -299,21 +321,17 @@
             </div>
             
             <div class="dropdown">
-                <a href="registercomplaint.jsp">Complaint</a>
+                <a href="index.jsp">Complaint</a>
                 <div class="dropdown-content">
-                    <a href="registercomplaint.jsp">Register Complaint</a>
-                    <a href="complaintstatus.jsp">Complaint Status</a>
-                    <a href="pastcomplaints.jsp">Past Complaints</a>
+                    <a href="index.jsp">Register Complaint</a>
+                    <a href="Search.jsp">Search Complaint Status</a>
+                    <a href="Feedback.jsp">Feedback</a>
+                    <a href="history">Complaint History</a>
                 </div>
             </div>
             
             <div class="dropdown">
-                <a href="profile.jsp">Profile</a>
-                <div class="dropdown-content">
-                    <a href="profile.jsp#personal">Personal Info</a>
-                    <a href="profile.jsp#account">Account Settings</a>
-                    <a href="profile.jsp#documents">Documents</a>
-                </div>
+                <a href="ProfileServlet">Profile</a>
             </div>
         </div>
         
@@ -335,7 +353,11 @@
         <div id="tableContainer">
             <table>
               <tr><th>Bill No</th><th>Amount</th><th>Month</th></tr>
-    <% for (Bill b : bills) {  String month = mn.getMonthName(b.getMonth()); %>
+    <% for (Bill b : bills) {  
+    	String month = mn.getMonthName(Integer.parseInt((b.getMonth().substring(5,7))));
+    	month = month +"-"+b.getMonth().substring(0,4);
+    
+    %>
         <tr>
             <td><%= b.getBillNo() %></td>
             <input type="hidden" name="billNo" value="<%= b.getBillNo() %>">
@@ -391,7 +413,7 @@
         </div>
 
         <input type="hidden" name="totalAmount" value="">
-        <button type="submit" id="pay-button">Pay &#8377;<%= totalAmount + 20 %></button>
+        <button class="paybtn" type="submit" id="pay-button">Pay &#8377;<%= totalAmount + 20 %></button>
     </div>
     </form>
 
@@ -406,6 +428,11 @@
                 $('#tableContainer').addClass('do-scroll');
             }
         });
+    </script>
+    <script type="text/javascript">
+        function logout() {
+            window.location.href = 'LogoutServlet';
+        }
     </script>
 
     </body>

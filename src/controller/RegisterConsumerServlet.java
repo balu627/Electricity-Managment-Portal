@@ -25,6 +25,7 @@ public class RegisterConsumerServlet extends HttpServlet {
         String email = request.getParameter("email");
         String countryCode = request.getParameter("countryCode");
         long mobile = Long.parseLong(request.getParameter("mobile"));
+        String address = request.getParameter("address");
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
@@ -34,7 +35,7 @@ public class RegisterConsumerServlet extends HttpServlet {
             request.getRequestDispatcher("register.jsp").forward(request, response);
             return;
         }
-
+        
         CustomerData customer = new CustomerData();
         customer.setConsumerId(ConsumerID);
         customer.setBillNo(billNo);
@@ -42,7 +43,9 @@ public class RegisterConsumerServlet extends HttpServlet {
         customer.setCustName(custName);
         customer.setAge(age);
         customer.setEmail(email);
+        customer.setCountryCode(countryCode);
         customer.setMobile(mobile);
+        customer.setAddress(address);
         customer.setUserId(userId);
         customer.setPassword(password);
 

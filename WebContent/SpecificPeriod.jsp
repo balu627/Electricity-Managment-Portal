@@ -1,11 +1,17 @@
 <%@ page session="true" %>
 <%
+response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); 
+response.setHeader("Pragma","no-cache"); 
+response.setDateHeader("Expires", 0);
+
     String user = (String) session.getAttribute("user");
     if (user == null) {
         response.sendRedirect("login.jsp");
         return;
     }
     
+    String custName = (String) session.getAttribute("custName");
+    String email = (String) session.getAttribute("email");
 %>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -20,7 +26,6 @@
     body {
         font-family: Arial, sans-serif;
         margin: 0;
-        padding: 20px;
         line-height: 1.6;
         color: #333;
         background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl2e6phZYZ5_SO0KCIPgB2doz9WrsJvIOD_g&s");
@@ -28,6 +33,71 @@
         background-size: cover;
         background-position: center;
     }
+    .topbar {
+            background-color: #004466;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+        .menu > div {
+            position: relative;
+            margin-right: 20px;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+        .menu a:hover {
+            background-color: #006699;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: #004466;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-info span {
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .user-info button {
+            padding: 6px 12px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .user-info button:hover {
+            background-color: #e60000;
+        }
     
     h1 {
         color: #2c3e50;
@@ -35,15 +105,6 @@
         padding-bottom: 10px;
         margin-bottom: 20px;
         text-align: center;
-    }
-
-    /* Add space for nav bar */
-    .navbar {
-        background-color: #2e4053;
-        padding: 10px;
-        color: white;
-        text-align: center;
-        margin-bottom: 20px;
     }
     
     table {
@@ -121,21 +182,47 @@
 </head>
 <body>
 
-<!-- Navbar section -->
-<div class="navbar">
-    <strong>Navigation Bar</strong>
-</div>
+<div class="topbar">
+        <div class="menu">
+            <div class="dropdown">
+                <a href="home.jsp">Home</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="viewBills">Bills</a>
+                <div class="dropdown-content">
+                    <a href="viewBills">View Bill</a>
+                    <a href="BillHistory">Payment History</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="index.jsp">Complaint</a>
+                <div class="dropdown-content">
+                    <a href="index.jsp">Register Complaint</a>
+                    <a href="Search.jsp">Search Complaint Status</a>
+                    <a href="Feedback.jsp">Feedback</a>
+                    <a href="history">Complaint History</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="profile.jsp">Profile</a>
+            </div>
+        </div>
+        
+        <div class="user-info">
+            <span>Welcome, <%= custName != null ? custName : user %></span>
+            <button type="button" onclick="logout()">Logout</button>
+        </div>
+    </div>
 <%  String fromstr = (String) request.getAttribute("from");
     String tostr = (String) request.getAttribute("to");
-    int fromint = Integer.parseInt(fromstr);
-    int toint = Integer.parseInt(tostr);
     MonthName mn = new MonthName();
-    String from = mn.getMonthName(fromint);
-    String to = mn.getMonthName(toint);
 %>
 
 
-<h1>Bill Payment History from <%= from  %> to <%=  to %></h1>
+<h1>Bill Payment History from <%= fromstr  %> to <%=  tostr %></h1>
 
 <% 
 List<Bill> paidBills = (List<Bill>) request.getAttribute("specificperiodbills"); 
@@ -162,12 +249,8 @@ if (paidBills == null || paidBills.isEmpty()) {
                     <td><%= bill.getBillNo() %></td>  
                     <td><%= bill.getModeOfPayment() %></td>
                     <td class="month-name">
-                        <% 
-                        if (bill.getMonth() >= 1 && bill.getMonth() <= 12) {
-                            out.print(mn.getMonthName(bill.getMonth()));
-                        } else {
-                            out.print("Invalid Month");
-                        }
+                        <%       
+                        out.print(mn.getMonthName(Integer.parseInt(bill.getMonth().substring(5,7)))+"-"+bill.getMonth().substring(0,4));
                         %>
                     </td>
                     <td class="amount">&#8377;<%= bill.getAmount() %></td>
@@ -197,6 +280,11 @@ if (paidBills == null || paidBills.isEmpty()) {
                 $('#tableContainer').addClass('do-scroll');
             }
         });
+    </script>
+    <script type="text/javascript">
+        function logout() {
+            window.location.href = 'LogoutServlet';
+        }
     </script>
 
 </body>

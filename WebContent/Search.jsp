@@ -1,40 +1,42 @@
 <%@ page session="true" %>
 <%
-response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); 
-response.setHeader("Pragma","no-cache"); 
-response.setDateHeader("Expires", 0);
-
+	response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); 
+	response.setHeader("Pragma","no-cache"); 
+	response.setDateHeader("Expires", 0);
+	
     String user = (String) session.getAttribute("user");
-String role = (String) session.getAttribute("role");
-if (user == null || !"admin".equals(role)) {
-    response.sendRedirect("login.jsp");
-    return;
-}
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
     
-    String name = (String) session.getAttribute("name");
+    String custName = (String) session.getAttribute("custName");
     String email = (String) session.getAttribute("email");
 %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+    
+<%@ page import="java.util.*, bean.ComplaintRegistration" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add Bill Page</title>
+<title>Search Complaint</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+
 <style>
     body {
-        font-family: 'Bree Serif', serif;
+         font-family: 'Bree Serif', serif;
         margin: 0;
-        color: #333;
-        letter-spacing: 1px;
+        line-height: 1.6;
         background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl2e6phZYZ5_SO0KCIPgB2doz9WrsJvIOD_g&s");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
     }
+    
     .topbar {
             background-color: #004466;
             color: white;
@@ -100,150 +102,173 @@ if (user == null || !"admin".equals(role)) {
         .user-info button:hover {
             background-color: #e60000;
         }
-    
-    h1 {
+
+    h2 {
         color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+        margin-top:10px;
+        margin-bottom: 10px;
         text-align: center;
-        margin-bottom: 30px;
-        margin-top:2rem;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
-    .container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        max-width: 550px;
+
+    p, label {
+        color: #2c3e50;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+    }
+
+    #search-container {
+        position:relative;
+        left:0%;
+        margin-top:100px;
+        max-width: 25%;
+        margin: 40px auto;
+        padding: 25px 30px;
+        border-radius: 10px;
         background-color: #f5f5f5;
-        margin: 0 auto;
-        padding: 30px;
-        border-radius: 8px;
-        color:black;
         box-shadow: 10px 10px rgba(92, 87, 87, 0.2);
     }
 
-    .container>div:first-child {
-        flex: 1 0 100%;
-    } 
-
-    .container>div {
-        flex: 0 1 48%;
+    .container {
+        position:relative;
+        left:0%;
+        margin-top:100px;
+        max-width: 50%;
+        margin: 40px auto;
+        padding: 25px 30px;
+        border-radius: 10px;
+        background-color: #f5f5f5;
+        display:flex;
+        flex-direction:row;
+        justify-content:center;
+        align-items:center;
+        box-shadow: 10px 10px rgba(92, 87, 87, 0.2);
     }
 
     .child2 {
-        margin-right: 10px;
-    }
-     
-    input[type="text"], #month{
-        width: 100%;
-        padding: 12px;
-        margin: 8px 0 20px;
-        border: 1px solid #ddd;
-        border-radius: 20px;
-        box-sizing: border-box;
-        font-size: 12px;
-        font-weight:200;
-        transition: border 0.3s;
-        letter-spacing: 1.2px;
-        color: #566573;
-        opacity: 1;
-        font-size:15px;
+        margin-left:50px;
     }
 
-    ::placeholder {
-        color: #566573;
-        opacity: 1;
-        font-size:15px;
-    }
-    
-    input[type="text"]:focus {
-        border-color: #3498db;
-        outline: none;
-        box-shadow: 0 0 5px rgba(52,152,219,0.5);
-    }
-    
     input[type="submit"] {
-        margin-top:10px;
         background-color: #2e4053;
         color: white;
-        padding: 12px 20px;
+        padding: 10px 8px;
         border: none;
         border-radius: 20px;
         cursor: pointer;
-        width: 45%;
-        margin-left:25%;
+        width: 25%;
+        position:relative;
+        left:40%;
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
         line-height: 20px;
-        font-family: Lexend, sans-serif;
+        font-family: "Lexend", sans-serif;
         transition: background-color 0.5s;
         letter-spacing: 1px;
     }
-    
+
     input[type="submit"]:hover {
         background-color: #2980b9;
         box-shadow: 0px 5px 5px 0px rgba(143, 148, 155, 0.2);
-        
     }
-    
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        letter-spacing: 1px;
-        font-size:17px;
-    }
+
 </style>
+
+
 </head>
 <body>
-<div class="topbar">
+
+    <div class="topbar">
         <div class="menu">
             <div class="dropdown">
-                <a href="adminhome.jsp">Dashboard</a>
+                <a href="home.jsp">Home</a>
             </div>
             
-            
             <div class="dropdown">
-                <a href="AddBill.jsp">Billing</a>
+                <a href="viewBills">Bills</a>
                 <div class="dropdown-content">
-                    <a href="AddBill.jsp">AddBill</a>
+                    <a href="viewBills">View Bill</a>
+                    <a href="BillHistory">Payment History</a>
                 </div>
             </div>
             
             <div class="dropdown">
-                <a href="active">Complaints</a>
+                <a href="index.jsp">Complaint</a>
                 <div class="dropdown-content">
-                    <a href="active">View Active Complaints</a>
-                    <a href="changestatus.jsp">Resolve Complaint</a>
+                    <a href="index.jsp">Register Complaint</a>
+                    <a href="Search.jsp">Search Complaint Status</a>
+                    <a href="Feedback.jsp">Feedback</a>
+                    <a href="history">Complaint History</a>
                 </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="ProfileServlet">Profile</a>
             </div>
         </div>
         
         <div class="user-info">
-            <span>Welcome Admin, <%= name %></span>
+            <span>Welcome, <%= custName != null ? custName : user %></span>
             <button type="button" onclick="logout()">Logout</button>
         </div>
     </div>
-
-<h1>Add Bill</h1>
-    <form  class="container" action="addBillservlet" method="post">
-        <div class="child1">
-            <label for="consumerNo">Consumer Number:</label>
-            <input type="text" id="consumerNo" name="consumerNo" pattern="^\d{13}$" minlength="13" maxlength="13"  placeholder="Enter consumer number" required>
-        </div>
-        
-        <div class="child2">
-            <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" minlength="1" maxlength="8" pattern="^[1-9]\d{0,7}$" placeholder="Enter amount">
-        </div>
-
-        <div class="child3">
-            <label for="month">Month:</label>
-            <input type="month" id="month" name="month" required />
-        </div>
     
-        <input type="submit" value="Submit Bill">
-    </form>
+    
+
+<h2>Search Complaint By Id</h2>
+
+    <div id="search-container">
+        <form method="post" action="search">
+                <p><b>Enter Complaint ID:</b></p> 
+                <input type="text" name="complaintId" required />
+                <input type="submit" value="Search" />
+        </form>
+    </div>
+
+    <%
+    ComplaintRegistration c = (ComplaintRegistration) request.getAttribute("complaint");
+    
+        if (c != null) {
+    %>
+        <h2>Complaint Details</h2>
+
+        <div class="container">
+            <div class="child1">
+                <p><b>ID:</b> <%= c.getComplaintid() %></p>
+                <p><b>Type:</b> <%= c.getType() %></p>
+                <p><b>Category:</b> <%= c.getCategory() %></p>
+                <p><b>Contact Person:</b> <%= c.getContactperson() %></p>
+                <p><b>Landmark:</b> <%= c.getLandmark() %></p>
+            </div>
+
+            <div class="child2">
+                <p><b>Consumer No:</b> <%= c.getConsumernumber() %></p>
+                <p><b>Description:</b> <%= c.getProblemdescription() %></p>
+                <p><b>Mobile:</b> <%= c.getMobile() %></p>
+                <p><b>Address:</b> <%= c.getAddress() %></p>
+                <p><b>Status:</b><%= c.getStatus() %></p>
+            </div>
+        </div>
+       
+    <%
+        } else if (request.getAttribute("complaint") == null) {
+    %>
+        <p>No complaint found with the given ID.</p>
+    <%
+        }
+    %>
     <script type="text/javascript">
         function logout() {
             window.location.href = 'LogoutServlet';

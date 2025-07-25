@@ -1,9 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import dao.LoginDao;
+import dao.adminDao;
 import util.DBUserTableCreator;
 
 @WebServlet("/LoginServlet")
@@ -25,42 +24,64 @@ public class LoginServlet extends HttpServlet {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
 
-
         try {
             DBUserTableCreator.createAdminTable();
-        	String result = LoginDao.checklogin(userType,userId,password);
-        	if(!result.equals("Match"))
-        	{
-        		request.setAttribute("message", result);
-        	    request.setAttribute("redirectPage", "login.jsp");
-        	    request.getRequestDispatcher("message.jsp").forward(request, response);
-        	}
-        	
-        		ResultSet rs = LoginDao.getSuccessCredentials(userId,userType);
-        		
-        		rs.next();
-        		
-        		HttpSession session = request.getSession();
-        			
+
+            String result = LoginDao.checklogin(userType, userId, password);
+
+            if (!result.equals("Match") && !result.equals("inactive")) {
+                request.setAttribute("message", result);
+                request.setAttribute("redirectPage", "login.jsp");
+                request.getRequestDispatcher("message.jsp").forward(request, response);
+                return;
+            }
+             
+            if(result.equals("inactive"))
+            {
+            	request.setAttribute("userId", userId);
+            	request.getRequestDispatcher("Restore.jsp").forward(request, response);
+            }
+
+            ResultSet rs = LoginDao.getSuccessCredentials(userId, userType);
+
+            if (rs.next()) {
+                HttpSession session = request.getSession();
                 session.setAttribute("user", userId);
                 session.setAttribute("name", rs.getString("name"));
                 session.setAttribute("email", rs.getString("email"));
                 session.setAttribute("role", userType);
-                if(!userType.equals("admin"))
-                {
-                	 String str = Long.toString(rs.getLong("consumerId"));
-                	    session.setAttribute("consumerNo", str);                }
 
-                if (userType.equals("admin")) {
-                    response.sendRedirect("adminhome.jsp");
-                } else {
-                    response.sendRedirect("home.jsp");
+                if (!userType.equals("admin")) {
+                    String consumerNo = Long.toString(rs.getLong("consumerId"));
+                    session.setAttribute("consumerNo", consumerNo);
                 }
+
+                request.setAttribute("message", "Login Success");
+                
+                if (userType.equals("admin")) {
+                	String totalcust = adminDao.getTotalcust();
+                    String pendcomplaints = adminDao.getpendComplaints();
+                    String billsGenerated = adminDao.getBillsGenerated();
+                    session.setAttribute("totalcust", totalcust);
+                    session.setAttribute("pendcomplaints",pendcomplaints);
+                    session.setAttribute("billsGenerated", billsGenerated);
+                    request.setAttribute("redirectPage", "adminhome.jsp");
+                } else {
+                    request.setAttribute("redirectPage", "home.jsp");
+                }
+                request.getRequestDispatcher("Loginsuccess.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "Invalid login credentials.");
+                request.setAttribute("redirectPage", "login.jsp");
+                request.getRequestDispatcher("message.jsp").forward(request, response);
+            }
+
+            rs.close();
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Error: " + e.getMessage());
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-        }
-    }      
+    }
+}

@@ -171,18 +171,21 @@ public class UserDao {
             DBUserTableCreator.createUserTable();
             Connection con = DBConnection.getConnection();
 
-            String sql = "INSERT INTO CustomerData (consumerId, billNo, title, name, age, email, mobile, userId, password, status) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Active')";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setLong(1, customer.getConsumerId());
-            ps.setLong(2, customer.getBillNo());
-            ps.setString(3, customer.getTitle());
-            ps.setString(4, customer.getCustName());
-            ps.setInt(5, customer.getAge());
-            ps.setString(6, customer.getEmail());
-            ps.setLong(7, customer.getMobile());
-            ps.setString(8, customer.getUserId());
-            ps.setString(9, customer.getPassword());
+            String sql = "INSERT INTO CustomerData (consumerId, billNo, title, name, age, email, countryCode, mobile, address, userId, password, status) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, 'Active')";
+	         PreparedStatement ps = con.prepareStatement(sql);
+	         ps.setLong(1, customer.getConsumerId());
+	         ps.setInt(2, customer.getBillNo());
+	         ps.setString(3, customer.getTitle());
+	         ps.setString(4, customer.getCustName());
+	         ps.setInt(5, customer.getAge());
+	         ps.setString(6, customer.getEmail());
+	         ps.setString(7, customer.getCountryCode());
+	         ps.setLong(8, customer.getMobile());
+	         ps.setString(9,customer.getAddress());
+	         ps.setString(10, customer.getUserId());
+	         ps.setString(11, customer.getPassword());
+
 
             status = ps.executeUpdate();
             con.close();

@@ -12,17 +12,28 @@ import dao.BillDao;
 public class addBillservlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    long consumerNo = Long.parseLong(request.getParameter("consumerNo"));
+	    
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+		 response.setHeader("Pragma", "no-cache");
+		 response.setDateHeader("Expires", 0);
+		 
+		 HttpSession session = request.getSession();
+		 
+		    if (session  == null || session.getAttribute("user") == null) {
+		        response.sendRedirect("login.jsp");
+		        return;
+		    }
+		
+		
+		long consumerNo = Long.parseLong(request.getParameter("consumerNo"));
 	    int amount = Integer.parseInt(request.getParameter("amount"));
-	    int month = Integer.parseInt(request.getParameter("month"));
+	    String month = request.getParameter("month");
 	    
 	    Bill bill = new Bill();
 	    bill.setConsumerNo(consumerNo);
 	    bill.setAmount(amount);
 	    bill.setMonth(month);
 	    int status = BillDao.addBill(bill);
-//////	    BillDao.dropBillTable();
-	    BillDao.printAllBills();
 	    if (status > 0) {
 	        request.setAttribute("message", "Bill added successfully!");
 	    } else {

@@ -46,6 +46,14 @@ public class LoginDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+            	if(!tableName.equals("AdminCred"))
+            	{
+            		String status = rs.getString("status");
+                	if(status.equals("inactive"))
+                	{
+                		return status;
+                	}
+            	}
                 String OrginalPass = rs.getString("password");
                 if(!OrginalPass.equals(password))
                 {

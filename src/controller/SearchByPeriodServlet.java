@@ -14,21 +14,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Bill;
+import bean.MonthName;
 import dao.BillDao;
 
 @WebServlet("/SearchByPeriodServlet")
 public class SearchByPeriodServlet extends HttpServlet {
       
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int fromMonth = Integer.parseInt(request.getParameter("from"));
-		int toMonth = Integer.parseInt(request.getParameter("to"));
-		HttpSession session = request.getSession();
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+		 response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+		 response.setDateHeader("Expires", 0);
+		 
+		 HttpSession session = request.getSession();
+		 
+		    if (session  == null || session.getAttribute("user") == null) {
+		        response.sendRedirect("login.jsp");
+		        return;
+		    }
+		
+		String fromMonth = (request.getParameter("from"));
+		String toMonth = (request.getParameter("to"));
 		long user = Long.parseLong((String) session.getAttribute("consumerNo"));
-		if(fromMonth>toMonth)
-		{
-			request.setAttribute("message", "From Cannot be Greater than To Month.");
-			request.getRequestDispatcher("billAdded.jsp").forward(request, response);
-		}
 		
 		List<Bill> specificperiodbills = new ArrayList<>();
 		ResultSet rs = BillDao.getSpecifcPeriod(fromMonth,toMonth,user);
@@ -37,7 +43,7 @@ public class SearchByPeriodServlet extends HttpServlet {
 			{
 				Bill temp = new Bill();
             	temp.setBillNo(rs.getInt("billNo"));
-            	temp.setMonth(rs.getInt("month"));
+            	temp.setMonth(rs.getDate("month").toString());
             	temp.setStatus(rs.getString("status"));
             	temp.setAmount(rs.getInt("amount"));
             	temp.setTransactionId(rs.getInt("transactionId"));
@@ -48,12 +54,14 @@ public class SearchByPeriodServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String sendfm = Integer.toString(fromMonth);
-		String sendtm = Integer.toString(toMonth);
+		MonthName mn = new MonthName();
+		String sendfm = mn.getMonthName(Integer.parseInt(fromMonth.substring(5)))+ "  "+ fromMonth.substring(0,4);
+		String sendtm = mn.getMonthName(Integer.parseInt(toMonth.substring(5)))+"  "+toMonth.substring(0,4);
 		request.setAttribute("from", sendfm);
 		request.setAttribute("to", sendtm);
 		request.setAttribute("specificperiodbills", specificperiodbills);
 	    request.getRequestDispatcher("SpecificPeriod.jsp").forward(request, response);
+	    
 	}
 
 }

@@ -16,8 +16,20 @@ import dao.BillDao;
 public class viewBillServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Bill> data = new ArrayList<>();
-        HttpSession session = request.getSession();
+       
+    	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+		 response.setHeader("Pragma", "no-cache"); 
+		 response.setDateHeader("Expires", 0);
+		 
+		 HttpSession session = request.getSession();
+		 
+		    if (session  == null || session.getAttribute("user") == null) {
+		        response.sendRedirect("login.jsp");
+		        return;
+		    }
+    	
+    	
+    	List<Bill> data = new ArrayList<>();
         long user = Long.parseLong((String) session.getAttribute("consumerNo"));
         try {
             ResultSet rs = BillDao.getUnpaidBills(user);
@@ -26,7 +38,7 @@ public class viewBillServlet extends HttpServlet {
                 bill.setBillNo(rs.getInt("billNo"));
                 bill.setConsumerNo(rs.getLong("consumerNo"));
                 bill.setAmount(rs.getInt("amount"));
-                bill.setMonth(rs.getInt("month"));
+                bill.setMonth(rs.getString("month").toString());
                 bill.setStatus(rs.getString("status"));
                 data.add(bill);
             }

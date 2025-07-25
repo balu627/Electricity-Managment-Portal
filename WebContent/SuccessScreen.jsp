@@ -1,5 +1,9 @@
 <%@ page session="true" %>
 <%
+response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); 
+response.setHeader("Pragma","no-cache"); 
+response.setDateHeader("Expires", 0);
+
     String user = (String) session.getAttribute("user");
     if (user == null) {
         response.sendRedirect("login.jsp");
@@ -132,5 +136,11 @@
     <button class="btn-print" onclick="printPage()">Print Receipt</button>
     <a href="home.jsp"><button class="btn-back" >back to home</button></a>
 </div>
+
+<script type="text/javascript">
+        function logout() {
+            window.location.href = 'LogoutServlet';
+        }
+    </script>
 </body>
 </html>
