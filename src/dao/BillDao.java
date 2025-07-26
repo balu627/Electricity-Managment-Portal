@@ -19,7 +19,7 @@ public class BillDao {
             DBBillTableCreator.createBillTable();
             Connection con = DBConnection.getConnection();
 
-            String sql = "INSERT INTO Bill (consumerNo, amount, month, modeOfPayment, paymentTimeDate, transactionId, status) VALUES (?, ?, ?, NULL, NULL, NULL, 'unpaid')";
+            String sql = "INSERT INTO Bill (consumerNo, amount, paidAmount, month, modeOfPayment, paymentTimeDate, transactionId, status) VALUES (?, ?,Null, ?, NULL, NULL, NULL, 'unpaid')";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, bill.getConsumerNo());
             ps.setInt(2, bill.getAmount());
@@ -35,20 +35,6 @@ public class BillDao {
         return status;
     }
 
-    public static void dropBillTable() {
-        try {
-            Connection con = DBConnection.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "DROP TABLE Bill";
-            stmt.executeUpdate(sql);
-            System.out.println("Bill table dropped successfully!");
-            stmt.close();
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Table might not exist yet!");
-            e.printStackTrace();
-        }
-    }
 
  
     
@@ -103,18 +89,19 @@ public class BillDao {
     	return false;
     }
     
-    public static void updateTransactionId(int billNo, String timestamp,String modeOfTransaction,int temptransactionId)
+    public static void updateTransactionId(int billNo, String timestamp,String modeOfTransaction,int temptransactionId,int totalAmount)
     {
     	try{
     		Connection con = DBConnection.getConnection();
-        	String sql = "update Bill SET modeOfPayment = ? , paymentTimeDate = ? , transactionId = ? , status = 'paid' WHERE billNo = ? AND status='unpaid'";
+        	String sql = "update Bill SET modeOfPayment = ? ,PaidAmount = ?, paymentTimeDate = ? , transactionId = ? , status = 'paid' WHERE billNo = ? AND status='unpaid'";
         	
         	PreparedStatement ps = con.prepareStatement(sql);
         	
             ps.setString(1,modeOfTransaction);
-            ps.setString(2, timestamp);
-            ps.setInt(3,temptransactionId);
-            ps.setInt(4, billNo);
+            ps.setInt(2, totalAmount);
+            ps.setString(3, timestamp);
+            ps.setInt(4,temptransactionId);
+            ps.setInt(5, billNo);
             ps.executeUpdate();
             
             con.close();
@@ -187,5 +174,22 @@ public class BillDao {
     	}
     	return rs;
     }
+
+    
+
+
+	public static ResultSet getBillsByTid(int transactionid) {
+		ResultSet rs = null;
+        try {
+        	Connection con = DBConnection.getConnection();
+            String sql = "SELECT * FROM Bill WHERE transactionId = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,transactionid);
+            rs = ps.executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+	}
 
 }

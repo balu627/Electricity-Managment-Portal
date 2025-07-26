@@ -376,8 +376,8 @@ response.setDateHeader("Expires", 0);
 
             <div class="amt-details">
                 <p><strong>Total Bill Amount :</strong> &#8377;<%= totalAmount %></p>
-                <p><strong>PG Charges :</strong> <span class="pg-charge">&#8377;20</span></p>
-                <p><strong>Total Payable :</strong><span class="total-amount">&#8377;<%= totalAmount + 20 %></span></p>
+                <p><strong>PG Charges :</strong> <span class="pg-charge">&#8377;<%= totalAmount*3/100 %></span></p>
+                <p><strong>Total Payable :</strong><span class="total-amount">&#8377;<%= totalAmount + totalAmount*3/100 %></span></p>
             </div>
         
     </div>
@@ -412,8 +412,8 @@ response.setDateHeader("Expires", 0);
             </div>
         </div>
 
-        <input type="hidden" name="totalAmount" value="">
-        <button class="paybtn" type="submit" id="pay-button">Pay &#8377;<%= totalAmount + 20 %></button>
+        <input type="hidden" name="totalAmount" value="<%= totalAmount + totalAmount*3/100 %>">
+        <button class="paybtn" type="submit" id="pay-button">Pay &#8377;<%= totalAmount + totalAmount*3/100 %></button>
     </div>
     </form>
 

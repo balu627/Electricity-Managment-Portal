@@ -53,6 +53,10 @@ public class BillHistoryServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		String sendfm = "";
+		String sendtm = "";
+		request.setAttribute("from", sendfm);
+		request.setAttribute("to", sendtm);
 		request.setAttribute("paidBillsFiveMonths", paidBillsFiveMonths);
 	    request.getRequestDispatcher("BillHistory.jsp").forward(request, response);
 	}

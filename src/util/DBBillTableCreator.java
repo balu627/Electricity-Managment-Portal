@@ -16,6 +16,7 @@ public class DBBillTableCreator {
                     + "billNo INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 10001, INCREMENT BY 1),"
                     + "consumerNo BIGINT,"
                     + "amount INT,"
+                    + "paidAmount INT,"
                     + "month date,"
                     + "modeOfPayment VARCHAR(20),"
                     + "paymentTimeDate VARCHAR(255),"

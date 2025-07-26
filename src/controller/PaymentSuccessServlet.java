@@ -2,6 +2,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 import javax.servlet.ServletException;
@@ -35,7 +36,7 @@ public class PaymentSuccessServlet extends HttpServlet {
 		
 		String[] billNos = request.getParameterValues("billNo");
 		String paymentMode = request.getParameter("paymentMode");
-		String totalAmount = request.getParameter("totalamount");
+		int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
 		
 		
 		Random r= new Random();
@@ -64,7 +65,7 @@ public class PaymentSuccessServlet extends HttpServlet {
 			for(int i=0;i<billNos.length;i++)
 			{
 				int billNo = Integer.parseInt(billNos[i]);
-				BillDao.updateTransactionId(billNo, timedateformat, paymentMode, temptransactionId);				
+				BillDao.updateTransactionId(billNo, timedateformat, paymentMode, temptransactionId,totalAmount);				
 			}
 		}
 		

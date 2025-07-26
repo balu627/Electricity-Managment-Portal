@@ -34,6 +34,7 @@ if (user == null) {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
+        height:100vh;
     }
     .topbar {
             background-color: #004466;
@@ -210,9 +211,10 @@ if (user == null) {
     }
 
     #search-range {
-        margin-top:30px;
+        margin-top:10px;
         margin-left:400px;
     }
+   
 
     #from, #to {
         padding: 10px 8px;
@@ -236,6 +238,9 @@ if (user == null) {
         line-height: 20px;
         font-family: "Lexend", sans-serif;
         letter-spacing: 1px;
+    }
+    .search{
+    	padding-bottom:1rem;
     }
 
 </style>
@@ -294,22 +299,21 @@ if (paidBills == null || paidBills.isEmpty()) {
             <thead>
                 <tr>
                     <th>Bill No</th>
-                    <th>Payment Mode</th>
                     <th>Month</th>
                     <th class="amount">Amount (&#8377;)</th>
                     <th>Payment Date</th>
                     <th>Transaction ID</th>
                     <th>Status</th>
+                    <th>Print Reciept</th>
                 </tr>
             </thead>
             <tbody>
                  <% for (Bill bill : paidBills) { %>
                     <tr>
                         <td><%= bill.getBillNo() %></td>
-                        <td><%= bill.getModeOfPayment() != null ? bill.getModeOfPayment() : "N/A" %></td>
                         <td class="month-name">
                         <% 
-                            out.print(mn.getMonthName(Integer.parseInt(bill.getMonth().substring(5,7))));                
+                        out.print(mn.getMonthName(Integer.parseInt(bill.getMonth().substring(5,7)))+"-"+bill.getMonth().substring(0,4));
                         %>
                     </td>
                         <td class="amount">&#8377;<%= bill.getAmount() %></td>
@@ -318,21 +322,34 @@ if (paidBills == null || paidBills.isEmpty()) {
                         <td class="<%= "status-" + bill.getStatus().toLowerCase() %>">
                             <%= bill.getStatus() %>
                         </td>
+                        <td>
+    						<form action="PrintReceiptServlet" method="post">
+        					<input type="hidden" name="transactionId" value="<%= bill.getTransactionId() %>">
+        					<button type="submit" style="background: none; border: none; cursor: pointer;">
+            				<i class="zmdi zmdi-receipt" style="font-size: 25px;"></i>
+        					</button>
+    						</form>
+						</td>               
                     </tr>
+                    
                 <% } %>
-
+	
             </tbody>
         </table>
     </div>
 
     <div >
-
+    
+    <%
+    	String fromm = request.getAttribute("from").toString();
+    	String tom = request.getAttribute("to").toString();
+    %>
     <form class="search" action="SearchByPeriodServlet" method="post">
             <div class="periodinput" id="search-range">
                 <label for="from">From:</label>
-                <input type="month" id="from" name="from">
+                <input type="month" id="from" name="from" value="<%= fromm%>">
              <label for="to">To :</label>
-                <input type="month" id="to" name="to">
+                <input type="month" id="to" name="to" value="<%= tom %>">
             
                 <input type="submit" value="Search">
         </div>
@@ -349,9 +366,14 @@ if (paidBills == null || paidBills.isEmpty()) {
         const from = document.getElementById("from").value;
         const to = document.getElementById("to").value;
 
-        if (from && to && from > to) {
-            alert("'From' month cannot be greater than 'To' month.");	
-            e.preventDefault(); 
+        if (from > to) {
+            alert("'From' month cannot be greater than 'To' month.");
+            e.preventDefault();
+        }
+        if (!from || !to) {
+            alert("Both 'From' and 'To' fields must be filled.");
+            e.preventDefault();
+            return;
         }
     });
     

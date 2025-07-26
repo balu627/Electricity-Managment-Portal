@@ -55,12 +55,13 @@ public class SearchByPeriodServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		MonthName mn = new MonthName();
-		String sendfm = mn.getMonthName(Integer.parseInt(fromMonth.substring(5)))+ "  "+ fromMonth.substring(0,4);
-		String sendtm = mn.getMonthName(Integer.parseInt(toMonth.substring(5)))+"  "+toMonth.substring(0,4);
+		String sendfm = fromMonth;
+		String sendtm = toMonth;
 		request.setAttribute("from", sendfm);
 		request.setAttribute("to", sendtm);
-		request.setAttribute("specificperiodbills", specificperiodbills);
-	    request.getRequestDispatcher("SpecificPeriod.jsp").forward(request, response);
+//		request.setAttribute("specificperiodbills", specificperiodbills);
+		request.setAttribute("paidBillsFiveMonths", specificperiodbills);
+	    request.getRequestDispatcher("BillHistory.jsp").forward(request, response);
 	    
 	}
 
