@@ -1,4 +1,4 @@
-package controller;
+package controller.BillServlets;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -40,6 +40,7 @@ public class viewBillServlet extends HttpServlet {
                 bill.setAmount(rs.getInt("amount"));
                 bill.setMonth(rs.getString("month").toString());
                 bill.setStatus(rs.getString("status"));
+                bill.setUnits(rs.getInt("units"));
                 data.add(bill);
             }
         } catch (Exception e) {

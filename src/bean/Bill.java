@@ -9,6 +9,7 @@ public class Bill {
     private String paymentTimeDate;
     private int transactionId;
     private String status;
+    private int units;
 
     public int getBillNo() {
         return billNo;
@@ -64,5 +65,15 @@ public class Bill {
     }
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    public int getUnits()
+    {
+    	return units;
+    }
+    
+    public void setUnits(int units)
+    {
+    	this.units = units;
     }
 }

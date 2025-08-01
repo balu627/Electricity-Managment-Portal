@@ -13,6 +13,7 @@
     String custName = (String) session.getAttribute("custName");
     String email = (String) session.getAttribute("email");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,6 @@
     <title>Customer Home</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <style>
         body {
@@ -30,73 +30,9 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            height:100vh;
+            height: 100vh;
         }
-        .topbar {
-            background-color: #004466;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .menu {
-            display: flex;
-            align-items: center;
-        }
-        .menu > div {
-            position: relative;
-            margin-right: 20px;
-        }
-        .menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 10px 15px;
-            display: inline-block;
-        }
-        .menu a:hover {
-            background-color: #006699;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: #004466;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-        .user-info span {
-            margin-right: 15px;
-            font-weight: bold;
-        }
-        .user-info button {
-            padding: 6px 12px;
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .user-info button:hover {
-            background-color: #e60000;
-        }
+
         .welcome-container {
             padding: 40px;
             background-color: rgba(255, 255, 255, 0.9);
@@ -108,40 +44,8 @@
     </style>
 </head>
 <body>
-    <div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="home.jsp">Home</a>
-            </div>
-            
-            <div class="dropdown">
-                <a href="viewBills">Bills</a>
-                <div class="dropdown-content">
-                    <a href="viewBills">View Bill</a>
-                    <a href="BillHistory">Payment History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="index.jsp">Complaint</a>
-                <div class="dropdown-content">
-                    <a href="index.jsp">Register Complaint</a>
-                    <a href="Search.jsp">Search Complaint Status</a>
-                    <a href="Feedback.jsp">Feedback</a>
-                    <a href="history">Complaint History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="ProfileServlet">Profile</a>
-            </div>
-        </div>
-        
-        <div class="user-info">
-            <span>Welcome, <%= custName != null ? custName : user %></span>
-            <button type="button" onclick="logout()">Logout</button>
-        </div>
-    </div>
+
+    <jsp:include page="shared/header.jsp" />
 
     <div class="welcome-container">
         <h2>Welcome to Your Electricity Account</h2>
@@ -150,10 +54,10 @@
         <div id="dashboard" style="margin-top: 30px;">
             <h3>Account Summary</h3>
             <p><strong>User ID:</strong> <%= user %></p>
-            <% if(custName != null) { %>
+            <% if (custName != null) { %>
                 <p><strong>Name:</strong> <%= custName %></p>
             <% } %>
-            <% if(email != null) { %>
+            <% if (email != null) { %>
                 <p><strong>Email:</strong> <%= email %></p>
             <% } %>
         </div>
@@ -165,4 +69,4 @@
         }
     </script>
 </body>
-</html> 
+</html>

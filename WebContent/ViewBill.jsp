@@ -312,7 +312,7 @@ function toggleRowAndTotal(cb) {
                 <tr>
                     <th>Select</th>
                     <th>Bill No</th>
-                    <th>Customer ID</th>
+                    <th>Consumed Units</th>
                     <th>Amount</th>
                     <th>Month</th>
                     <th>Status</th>
@@ -334,13 +334,19 @@ function toggleRowAndTotal(cb) {
                                amount="<%= b.getAmount() %>">
                     </td>
                     <td><%= b.getBillNo() %></td>
-                    <td><%= b.getConsumerNo() %></td>
+                    <td><%= b.getUnits() %></td>
                     <td>₹<%= b.getAmount() %></td>
                     <td><%= month %></td>
                     <td data-status="<%= b.getStatus().toLowerCase() %>"><%= b.getStatus() %></td>
                 </tr>
                 <%
                         }
+                    }
+                    else{
+                    	%><tr>
+    						<td colspan="6" style="text-align:center; font-weight:bold;">No Dues</td>
+						  </tr>
+						  <%
                     }
                 %>
             </tbody>

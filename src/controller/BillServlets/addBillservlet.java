@@ -1,4 +1,4 @@
-package controller;
+package controller.BillServlets;
 
 import java.io.IOException;
 import javax.servlet.*;
@@ -26,13 +26,14 @@ public class addBillservlet extends HttpServlet {
 		
 		
 		long consumerNo = Long.parseLong(request.getParameter("consumerNo"));
-	    int amount = Integer.parseInt(request.getParameter("amount"));
-	    String month = request.getParameter("month");
 	    
 	    Bill bill = new Bill();
+	    RandomUnitGenerator rg = new RandomUnitGenerator();
+	    int units = rg.GenerateUnits();
 	    bill.setConsumerNo(consumerNo);
-	    bill.setAmount(amount);
-	    bill.setMonth(month);
+	    bill.setAmount(rg.calculateAmount(units));
+	    bill.setMonth(rg.GetPrevMonth());
+	    bill.setUnits(units);
 	    int status = BillDao.addBill(bill);
 	    if (status > 0) {
 	        request.setAttribute("message", "Bill added successfully!");

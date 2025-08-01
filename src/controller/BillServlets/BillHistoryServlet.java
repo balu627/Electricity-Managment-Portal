@@ -1,4 +1,4 @@
-package controller;
+package controller.BillServlets;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -14,15 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Bill;
-import bean.MonthName;
 import dao.BillDao;
+import util.DBBillTableCreator;
 
-@WebServlet("/SearchByPeriodServlet")
-public class SearchByPeriodServlet extends HttpServlet {
-      
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-		 response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+@WebServlet("/BillHistory")
+public class BillHistoryServlet extends HttpServlet {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+		 response.setHeader("Pragma", "no-cache");
 		 response.setDateHeader("Expires", 0);
 		 
 		 HttpSession session = request.getSession();
@@ -32,12 +32,11 @@ public class SearchByPeriodServlet extends HttpServlet {
 		        return;
 		    }
 		
-		String fromMonth = (request.getParameter("from"));
-		String toMonth = (request.getParameter("to"));
+//		HttpSession session = request.getSession();
+		 DBBillTableCreator.createBillTable();
 		long user = Long.parseLong((String) session.getAttribute("consumerNo"));
-		
-		List<Bill> specificperiodbills = new ArrayList<>();
-		ResultSet rs = BillDao.getSpecifcPeriod(fromMonth,toMonth,user);
+		List<Bill> paidBillsFiveMonths = new ArrayList<>();
+		ResultSet rs = BillDao.getPastFiveMonths(user);
 		try {
 			while(rs.next())
 			{
@@ -49,20 +48,18 @@ public class SearchByPeriodServlet extends HttpServlet {
             	temp.setTransactionId(rs.getInt("transactionId"));
             	temp.setPaymentTimeDate(rs.getString("paymentTimeDate"));
             	temp.setModeOfPayment(rs.getString("modeOfPayment"));
-            	specificperiodbills.add(temp);
+            	temp.setUnits(rs.getInt("units"));
+            	paidBillsFiveMonths.add(temp);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		MonthName mn = new MonthName();
-		String sendfm = fromMonth;
-		String sendtm = toMonth;
+		String sendfm = "";
+		String sendtm = "";
 		request.setAttribute("from", sendfm);
 		request.setAttribute("to", sendtm);
-//		request.setAttribute("specificperiodbills", specificperiodbills);
-		request.setAttribute("paidBillsFiveMonths", specificperiodbills);
+		request.setAttribute("paidBillsFiveMonths", paidBillsFiveMonths);
 	    request.getRequestDispatcher("BillHistory.jsp").forward(request, response);
-	    
 	}
 
 }

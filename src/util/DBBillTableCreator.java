@@ -21,7 +21,8 @@ public class DBBillTableCreator {
                     + "modeOfPayment VARCHAR(20),"
                     + "paymentTimeDate VARCHAR(255),"
                     + "transactionId VARCHAR(20),"
-                    + "status VARCHAR(10)"
+                    + "status VARCHAR(10),"
+                    + "units INT"
                     + ")";
             stmt.executeUpdate(sql);
             System.out.println("Bill table created successfully!");

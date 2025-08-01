@@ -1,5 +1,5 @@
 
-package controller;
+package controller.BillServlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class PaymentSuccessServlet extends HttpServlet {
 			for(int i=0;i<billNos.length;i++)
 			{
 				int billNo = Integer.parseInt(billNos[i]);
-				BillDao.updateTransactionId(billNo, timedateformat, paymentMode, temptransactionId,totalAmount);				
+				BillDao.updateTransactionId(billNo, timedateformat, paymentMode, temptransactionId,totalAmount);			
 			}
 		}
 		

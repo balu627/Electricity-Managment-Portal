@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,23 +19,42 @@ public class BillDao {
         try {
             DBBillTableCreator.createBillTable();
             Connection con = DBConnection.getConnection();
-
-            String sql = "INSERT INTO Bill (consumerNo, amount, paidAmount, month, modeOfPayment, paymentTimeDate, transactionId, status) VALUES (?, ?,Null, ?, NULL, NULL, NULL, 'unpaid')";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setLong(1, bill.getConsumerNo());
-            ps.setInt(2, bill.getAmount());
-            String monthInput = bill.getMonth() + "-01";
-            java.sql.Date sqlDate = java.sql.Date.valueOf(monthInput);
-            ps.setDate(3,sqlDate);
-            status = ps.executeUpdate();
-            con.close();
-
+            ResultSet stat = checkMonthBillExists(bill.getConsumerNo(),bill.getMonth());
+            if(stat.next())
+            {
+            	return 0;
+            }
+            else
+            {
+            	String sql = "INSERT INTO Bill (consumerNo, amount, paidAmount, month, modeOfPayment, paymentTimeDate, transactionId, status,units) VALUES (?, ?,Null, ?, NULL, NULL, NULL, 'unpaid',?)";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setLong(1, bill.getConsumerNo());
+                ps.setInt(2, bill.getAmount());
+                String monthInput = bill.getMonth() + "-01";
+                java.sql.Date sqlDate = java.sql.Date.valueOf(monthInput);
+                ps.setDate(3,sqlDate);
+                ps.setInt(4,bill.getUnits());
+                status = ps.executeUpdate();
+                con.close();
+            }
+       
         } catch (Exception e) {
             e.printStackTrace();
         }
         return status;
     }
-
+    
+    public static ResultSet checkMonthBillExists(long ConsumerNo, String month) throws SQLException
+    {
+    	 Connection con = DBConnection.getConnection();
+         String sql = "select * from Bill where consumerNo = ? AND month = ?";
+         PreparedStatement ps = con.prepareStatement(sql);
+         ps.setLong(1, ConsumerNo);
+         java.sql.Date sqlDate = java.sql.Date.valueOf(month+"-01");
+         ps.setDate(2, sqlDate);
+         ResultSet status = ps.executeQuery();
+    	return status;
+    }
 
  
     
@@ -185,6 +205,22 @@ public class BillDao {
             String sql = "SELECT * FROM Bill WHERE transactionId = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,transactionid);
+            rs = ps.executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+	}
+
+
+
+
+	public static ResultSet getConsumers() {
+		ResultSet rs = null;
+		try {
+        	Connection con = DBConnection.getConnection();
+            String sql = "SELECT consumerId FROM CustomerData";
+            PreparedStatement ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
         } catch (Exception e) {
             e.printStackTrace();

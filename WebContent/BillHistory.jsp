@@ -300,8 +300,8 @@ if (paidBills == null || paidBills.isEmpty()) {
                 <tr>
                     <th>Bill No</th>
                     <th>Month</th>
+                    <th>Consumed Units</th>
                     <th class="amount">Amount (&#8377;)</th>
-                    <th>Payment Date</th>
                     <th>Transaction ID</th>
                     <th>Status</th>
                     <th>Print Reciept</th>
@@ -316,8 +316,8 @@ if (paidBills == null || paidBills.isEmpty()) {
                         out.print(mn.getMonthName(Integer.parseInt(bill.getMonth().substring(5,7)))+"-"+bill.getMonth().substring(0,4));
                         %>
                     </td>
+                        <td class="date"><%= bill.getUnits() %></td>
                         <td class="amount">&#8377;<%= bill.getAmount() %></td>
-                        <td class="date"><%= bill.getPaymentTimeDate() %></td>
                         <td><%= bill.getTransactionId() %></td>
                         <td class="<%= "status-" + bill.getStatus().toLowerCase() %>">
                             <%= bill.getStatus() %>
@@ -340,11 +340,16 @@ if (paidBills == null || paidBills.isEmpty()) {
 
     <div >
     
-    <%
+   
+   
+    </div>
+    
+ <% } %>
+  	<%
     	String fromm = request.getAttribute("from").toString();
     	String tom = request.getAttribute("to").toString();
     %>
-    <form class="search" action="SearchByPeriodServlet" method="post">
+ 		<form class="search" action="SearchByPeriodServlet" method="post">
             <div class="periodinput" id="search-range">
                 <label for="from">From:</label>
                 <input type="month" id="from" name="from" value="<%= fromm%>">
@@ -352,13 +357,9 @@ if (paidBills == null || paidBills.isEmpty()) {
                 <input type="month" id="to" name="to" value="<%= tom %>">
             
                 <input type="submit" value="Search">
-        </div>
+        	</div>
            
         </form>
-    </div>
-    
- <% } %>
-
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
     <script>

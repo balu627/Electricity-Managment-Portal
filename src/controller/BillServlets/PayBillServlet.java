@@ -1,4 +1,4 @@
-package controller;
+package controller.BillServlets;
 import java.util.*;
 import bean.Bill;
 import dao.BillDao;

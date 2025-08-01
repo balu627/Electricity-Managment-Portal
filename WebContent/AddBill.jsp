@@ -231,16 +231,7 @@ if (user == null || !"admin".equals(role)) {
             <label for="consumerNo">Consumer Number:</label>
             <input type="text" id="consumerNo" name="consumerNo" pattern="^\d{13}$" minlength="13" maxlength="13"  placeholder="Enter consumer number" required>
         </div>
-        
-        <div class="child2">
-            <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" minlength="1" maxlength="8" pattern="^[1-9]\d{0,7}$" placeholder="Enter amount">
-        </div>
-
-        <div class="child3">
-            <label for="month">Month:</label>
-            <input type="month" id="month" name="month" required />
-        </div>
+     
     
         <input type="submit" value="Submit Bill">
     </form>
