@@ -36,6 +36,6 @@ public class UpdateChangedDetailsServlet extends HttpServlet {
 	        request.setAttribute("path","ProfileServlet");
 	    }
 
-	    request.getRequestDispatcher("UpdateAck.jsp").forward(request, response);
+	    request.getRequestDispatcher("Profile/UpdateAck.jsp").forward(request, response);
     }
 }

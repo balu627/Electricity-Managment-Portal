@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	System.out.println("loginservlet");
         String userType = request.getParameter("userType");
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
@@ -31,15 +31,15 @@ public class LoginServlet extends HttpServlet {
 
             if (!result.equals("Match") && !result.equals("inactive")) {
                 request.setAttribute("message", result);
-                request.setAttribute("redirectPage", "login.jsp");
-                request.getRequestDispatcher("message.jsp").forward(request, response);
+                request.setAttribute("redirectPage", "Home/login.jsp");
+                request.getRequestDispatcher("Home/message.jsp").forward(request, response);
                 return;
             }
              
             if(result.equals("inactive"))
             {
             	request.setAttribute("userId", userId);
-            	request.getRequestDispatcher("Restore.jsp").forward(request, response);
+            	request.getRequestDispatcher("Profile/Restore.jsp").forward(request, response);
             }
 
             ResultSet rs = LoginDao.getSuccessCredentials(userId, userType);
@@ -65,15 +65,15 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("totalcust", totalcust);
                     session.setAttribute("pendcomplaints",pendcomplaints);
                     session.setAttribute("billsGenerated", billsGenerated);
-                    request.setAttribute("redirectPage", "adminhome.jsp");
+                    request.setAttribute("redirectPage", "Home/adminhome.jsp");
                 } else {
-                    request.setAttribute("redirectPage", "home.jsp");
+                    request.setAttribute("redirectPage", "Home/home.jsp");
                 }
-                request.getRequestDispatcher("Loginsuccess.jsp").forward(request, response);
+                request.getRequestDispatcher("Home/Loginsuccess.jsp").forward(request, response);
             } else {
                 request.setAttribute("message", "Invalid login credentials.");
-                request.setAttribute("redirectPage", "login.jsp");
-                request.getRequestDispatcher("message.jsp").forward(request, response);
+                request.setAttribute("redirectPage", "Home/login.jsp");
+                request.getRequestDispatcher("Home/message.jsp").forward(request, response);
             }
 
             rs.close();

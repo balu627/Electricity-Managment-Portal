@@ -1,40 +1,35 @@
 <%@ page session="true" %>
 <%
-response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); 
-response.setHeader("Pragma","no-cache"); 
-response.setDateHeader("Expires", 0);
+	response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); 
+	response.setHeader("Pragma","no-cache"); 
+	response.setDateHeader("Expires", 0);
+	
     String user = (String) session.getAttribute("user");
-    String role = (String) session.getAttribute("role");
-    
-    if (user == null || !"admin".equals(role)) {
+    if (user == null) {
         response.sendRedirect("login.jsp");
         return;
     }
     
-    String name = (String) session.getAttribute("name");
+    String custName = (String) session.getAttribute("custName");
     String email = (String) session.getAttribute("email");
 %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
-    
-     <%@ page import="java.util.*, bean.ComplaintRegistration" %>
-     <%
-    
-     List<ComplaintRegistration> list = (List<ComplaintRegistration>) request.getAttribute("unsolved");
+<%@ page import="java.util.*, bean.ComplaintRegistration" %>     <%
+     List<ComplaintRegistration> list1 = (List<ComplaintRegistration>) request.getAttribute("PendingComplaints");
+     List<ComplaintRegistration> list2 = (List<ComplaintRegistration>) request.getAttribute("solvedComplaints");
 %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="ISO-8859-1">
-    <title>Active Complaints</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>complaint history </title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-    <style>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+
+<style>
         body {
-           font-family: 'Bree Serif', serif;
+            font-family: 'Bree Serif', serif;
             margin: 0;
             line-height: 1.6;
             background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl2e6phZYZ5_SO0KCIPgB2doz9WrsJvIOD_g&s");
@@ -176,79 +171,81 @@ response.setDateHeader("Expires", 0);
     </style>
 </head>
 <body>
-<div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="adminhome.jsp">Dashboard</a>
-            </div>
-            
-            
-            <div class="dropdown">
-                <a href="AddBill.jsp">Billing</a>
-                <div class="dropdown-content">
-                    <a href="AddBill.jsp">AddBill</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="active">Complaints</a>
-                <div class="dropdown-content">
-                    <a href="active">View Active Complaints</a>
-                    <a href="changestatus.jsp">Resolve Complaint</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="user-info">
-            <span>Welcome Admin, <%= name %></span>
-            <button type="button" onclick="logout()">Logout</button>
-        </div>
-    </div>
+<jsp:include page="/shared/header.jsp" />
 
-<h2>Active Complaint History</h2>
-<% if (list == null) { %>
-    <p>No active complaints found.</p>
-<% } else { %>
-    <div id="tableContainer">
-    <table>
-        <tr><th>ID</th><th>Type</th><th>Category</th><th>Contact</th><th>Status</th></tr>
-        <% for (ComplaintRegistration c : list) { %>
-        <tr>
-            <td><%= c.getComplaintid() %></td>
-            <td><%= c.getType() %></td>
-            <td><%= c.getCategory() %></td>
-            <td><%= c.getContactperson() %></td>
-            <td><%= c.getStatus() %></td>
-        </tr>
-        <% } %>
-
-    </table>
-    </div>
-<% } %>
-
-<!-- <form method="post" action="active">
-    <input type="submit" value="Get Active Complaints">
-</form> -->
-</body>
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-    <script>
-       $(document).ready(function(){
-            var rowCount = $('tbody tr').length;
-            console.log(rowCount);
-            if (rowCount < 6 ) {
-                $("<style>", {id: "myStyle"}).appendTo("head");
-                $("#myStyle").html("#tableContainer { overflow: hidden; }");
-            }else {
-                $('#tableContainer').addClass('do-scroll');
-            }
-        });
-    </script>
+  <h2>Pending Complaint History</h2>
+  
+      <%
+            if (list1 == null) {
+        %>
+            <p>No complaints </p>
+        <%
+            } else {
+        %>
     
-    <script type="text/javascript">
+    <h3> Complaints</h3>
+    <table border="1">
+      <tr><th>ID</th><th>Type</th><th>Category</th><th>Contact</th><th>Status</th></tr>
+      <%
+        for (ComplaintRegistration c : list1) {
+          
+      %>
+        <tr>
+          <td><%= c.getComplaintid() %></td>
+          <td><%= c.getType() %></td>
+          <td><%= c.getCategory() %></td>
+          <td><%= c.getContactperson() %></td>
+          <td><%= c.getStatus() %></td>
+        </tr>
+      <%
+          
+        }
+      %>
+    </table>
+   <%
+          
+        }
+      %>
+      
+      
+      <h2>Solved Complaint History</h2>
+  
+      <%
+            if (list1 == null) {
+        %>
+            <p>No complaints </p>
+        <%
+            } else {
+        %>
+    
+    <h3> Solved Complaints</h3>
+    <table border="1">
+      <tr><th>ID</th><th>Type</th><th>Category</th><th>Contact</th><th>Status</th></tr>
+      <%
+        for (ComplaintRegistration c : list2) {
+          
+      %>
+        <tr>
+          <td><%= c.getComplaintid() %></td>
+          <td><%= c.getType() %></td>
+          <td><%= c.getCategory() %></td>
+          <td><%= c.getContactperson() %></td>
+          <td><%= c.getStatus() %></td>
+        </tr>
+      <%
+          
+        }
+      %>
+    </table>
+   <%
+          
+        }
+      %>
+ <script type="text/javascript">
         function logout() {
             window.location.href = 'LogoutServlet';
         }
     </script>
-
+  
+</body>
 </html>

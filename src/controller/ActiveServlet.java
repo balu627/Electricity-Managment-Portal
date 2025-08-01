@@ -19,17 +19,14 @@ public class ActiveServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-
+		
 		 HistoryDao dao = new HistoryDao();
 		 List<ComplaintRegistration> unsolved = dao.getComplaintsByStatus("pending");
 		 
 		 request.setAttribute("unsolved", unsolved);
-		 
-		 RequestDispatcher rd = request.getRequestDispatcher("active.jsp");
+		 RequestDispatcher rd = request.getRequestDispatcher("/Complaint/active.jsp");
 		 
 		 rd.forward(request, response);
-		// TODO Auto-generated method stub
-		//doGet(request, response);
 	}
 
 }

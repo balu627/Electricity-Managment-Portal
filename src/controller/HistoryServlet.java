@@ -28,7 +28,7 @@ public class HistoryServlet extends HttpServlet {
 	        request.setAttribute("PendingComplaints",pending);
 	        request.setAttribute("solvedComplaints", solved);
 
-	        RequestDispatcher rd = request.getRequestDispatcher("history.jsp");
+	        RequestDispatcher rd = request.getRequestDispatcher("Complaint/history.jsp");
 	        rd.forward(request, response);
 		//doGet(request, response);
 	}

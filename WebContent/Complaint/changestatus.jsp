@@ -135,29 +135,7 @@ input[type="submit"]:hover {
 </style>
 </head>
 <body>
-<div class="topbar">
-    <div class="menu">
-        <div class="dropdown">
-            <a href="adminhome.jsp">Dashboard</a>
-        </div>
-        <div class="dropdown">
-            <a href="AddBill.jsp">Billing</a>
-            <div class="dropdown-content">
-                <a href="AddBill.jsp">AddBill</a>	
-            </div>
-        </div>
-        <div class="dropdown">
-            <a href="active">Complaints</a>
-            <div class="dropdown-content">
-                <a href="active">View Active Complaints</a>
-                <a href="changestatus.jsp">Resolve Complaint</a>
-            </div>
-        </div>
-    </div>
-    <div class="user-info">
-        <span>Welcome Admin, <%= name %></span>
-        <button type="button" onclick="logout()">Logout</button>
-    </div>
+<jsp:include page="/shared/adminheader.jsp" />
 </div>
 <div class="content-box">
     <h2>Change Complaint Status</h2>

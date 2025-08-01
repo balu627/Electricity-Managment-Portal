@@ -20,7 +20,7 @@
 
 <script>
     setTimeout(function() {
-        window.location.href = "adminhome.jsp";
+        window.location.href = "Home/adminhome.jsp";
     }, 1000);
 </script>
 

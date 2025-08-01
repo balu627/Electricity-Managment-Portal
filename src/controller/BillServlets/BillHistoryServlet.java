@@ -59,7 +59,7 @@ public class BillHistoryServlet extends HttpServlet {
 		request.setAttribute("from", sendfm);
 		request.setAttribute("to", sendtm);
 		request.setAttribute("paidBillsFiveMonths", paidBillsFiveMonths);
-	    request.getRequestDispatcher("BillHistory.jsp").forward(request, response);
+	    request.getRequestDispatcher("Bills/BillHistory.jsp").forward(request, response);
 	}
 
 }

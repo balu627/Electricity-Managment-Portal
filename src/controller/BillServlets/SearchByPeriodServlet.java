@@ -62,7 +62,7 @@ public class SearchByPeriodServlet extends HttpServlet {
 		request.setAttribute("to", sendtm);
 //		request.setAttribute("specificperiodbills", specificperiodbills);
 		request.setAttribute("paidBillsFiveMonths", specificperiodbills);
-	    request.getRequestDispatcher("BillHistory.jsp").forward(request, response);
+	    request.getRequestDispatcher("/Bills/BillHistory.jsp").forward(request, response);
 	    
 	}
 

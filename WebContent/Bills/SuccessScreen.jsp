@@ -134,7 +134,7 @@ response.setDateHeader("Expires", 0);
     </ul>
 
     <button class="btn-print" onclick="printPage()">Print Receipt</button>
-    <a href="home.jsp"><button class="btn-back" >back to home</button></a>
+    <a href="Home/home.jsp"><button class="btn-back" >back to home</button></a>
 </div>
 
 <script type="text/javascript">

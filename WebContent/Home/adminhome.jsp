@@ -122,34 +122,7 @@ response.setDateHeader("Expires", 0);
     </style>
 </head>
 <body>
-    <div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="adminhome.jsp">Dashboard</a>
-            </div>
-            
-            
-            <div class="dropdown">
-                <a href="AddBill.jsp">Billing</a>
-                <div class="dropdown-content">
-                    <a href="AddBill.jsp">AddBill</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="active">Complaints</a>
-                <div class="dropdown-content">
-                    <a href="active">View Active Complaints</a>
-                    <a href="changestatus.jsp">Resolve Complaint</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="user-info">
-            <span>Welcome Admin, <%= name %></span>
-            <button type="button" onclick="logout()">Logout</button>
-        </div>
-    </div>
+    <jsp:include page="/shared/adminheader.jsp" />
 
     <div class="welcome-container">
         <h2>Admin Dashboard</h2>

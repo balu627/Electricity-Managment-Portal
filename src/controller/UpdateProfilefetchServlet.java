@@ -26,7 +26,7 @@ public class UpdateProfilefetchServlet extends HttpServlet {
 		long consumerNo = user;
 		CustomerData data = ProfileDao.getCustomerByConsumerNo(consumerNo);
 		request.setAttribute("data", data);
-		request.getRequestDispatcher("ProfileUpdate.jsp").forward(request, response);
+		request.getRequestDispatcher("Profile/ProfileUpdate.jsp").forward(request, response);
 	}
 
 }

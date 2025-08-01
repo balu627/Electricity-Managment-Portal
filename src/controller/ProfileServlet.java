@@ -25,7 +25,7 @@ public class ProfileServlet extends HttpServlet {
 		 HttpSession session = request.getSession();
 		 
 		    if (session  == null || session.getAttribute("user") == null) {
-		        response.sendRedirect("login.jsp");
+		        response.sendRedirect("Home/login.jsp");
 		        return;
 		    }
 		
@@ -34,7 +34,7 @@ public class ProfileServlet extends HttpServlet {
 		long consumerNo = Long.parseLong((String) session.getAttribute("consumerNo"));
 		CustomerData data = ProfileDao.getCustomerByConsumerNo(consumerNo);
 		request.setAttribute("data", data);
-		request.getRequestDispatcher("Profile.jsp").forward(request, response);
+		request.getRequestDispatcher("Profile/Profile.jsp").forward(request, response);
 	}
 
 

@@ -79,7 +79,7 @@
         <button type="submit" class="restore-btn">Restore Account</button>
     </form>
 
-    <form action="login.jsp" method="get">
+    <form action="<%=request.getContextPath()%>/Home/login.jsp" method="get">
         <button type="submit" class="back-btn">Back</button>
     </form>
 </div>

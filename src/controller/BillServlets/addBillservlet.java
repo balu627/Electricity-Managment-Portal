@@ -26,7 +26,6 @@ public class addBillservlet extends HttpServlet {
 		
 		
 		long consumerNo = Long.parseLong(request.getParameter("consumerNo"));
-	    
 	    Bill bill = new Bill();
 	    RandomUnitGenerator rg = new RandomUnitGenerator();
 	    int units = rg.GenerateUnits();
@@ -41,7 +40,8 @@ public class addBillservlet extends HttpServlet {
 	        request.setAttribute("message", "Failed to add bill.");
 	    }
 
-	    request.getRequestDispatcher("billAdded.jsp").forward(request, response);
+	    
+	    request.getRequestDispatcher("/Bills/billAdded.jsp").forward(request, response);
 	}
 
 }

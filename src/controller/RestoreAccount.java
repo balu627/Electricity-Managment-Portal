@@ -18,6 +18,6 @@ public class RestoreAccount extends HttpServlet {
 
         ChangeUserStatusDoa.updatestatus(userId);
 
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Home/login.jsp");
     }
 }

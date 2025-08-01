@@ -65,7 +65,7 @@ public class PayBillServlet extends HttpServlet {
 	    	
 	    }
 	    request.setAttribute("selectedBills",checkedbills);
-	    request.getRequestDispatcher("PayBill.jsp").forward(request, response);
+	    request.getRequestDispatcher("Bills/PayBill.jsp").forward(request, response);
 	    
 	}
 

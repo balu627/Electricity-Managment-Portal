@@ -29,7 +29,7 @@ public class PaymentSuccessServlet extends HttpServlet {
 		 HttpSession session = request.getSession();
 		 
 		    if (session  == null || session.getAttribute("user") == null) {
-		        response.sendRedirect("login.jsp");
+		        response.sendRedirect("Home/login.jsp");
 		        return;
 		    }
 		
@@ -75,7 +75,7 @@ public class PaymentSuccessServlet extends HttpServlet {
 		request.setAttribute("Tid",temptransactionId);
 		request.setAttribute("paymentmode",paymentMode);
 		request.setAttribute("totalamount", totalAmount);
-	    request.getRequestDispatcher("SuccessScreen.jsp").forward(request, response);
+	    request.getRequestDispatcher("Bills/SuccessScreen.jsp").forward(request, response);
 	}
 
 }

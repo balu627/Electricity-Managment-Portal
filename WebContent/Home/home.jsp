@@ -45,7 +45,7 @@
 </head>
 <body>
 
-    <jsp:include page="shared/header.jsp" />
+    <jsp:include page="/shared/header.jsp" />
 
     <div class="welcome-container">
         <h2>Welcome to Your Electricity Account</h2>

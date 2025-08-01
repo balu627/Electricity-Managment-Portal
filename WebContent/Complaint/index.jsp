@@ -98,7 +98,7 @@
         .user-info button:hover {
             background-color: #e60000;
         }
-    form {
+    .form {
         background: #fff;
         padding: 25px;
         max-width: 700px;
@@ -135,43 +135,9 @@
 </head>
 <body>
 
-<div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="home.jsp">Home</a>
-            </div>
-            
-            <div class="dropdown">
-                <a href="viewBills">Bills</a>
-                <div class="dropdown-content">
-                    <a href="viewBills">View Bill</a>
-                    <a href="BillHistory">Payment History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="index.jsp">Complaint</a>
-                <div class="dropdown-content">
-                    <a href="index.jsp">Register Complaint</a>
-                    <a href="Search.jsp">Search Complaint Status</a>
-                    <a href="Feedback.jsp">Feedback</a>
-                    <a href="history">Complaint History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="ProfileServlet">Profile</a>
-            </div>
-        </div>
-        
-        <div class="user-info">
-            <span>Welcome, <%= custName != null ? custName : user %></span>
-            <button type="button" onclick="logout()">Logout</button>
-        </div>
-    </div>
+<jsp:include page="/shared/header.jsp" />
 
-
-	<form  method="post" action="register1">
+	<form class="form" method="post" action="register1">
 <label for="ct"  id=ct1>Complaint/Service Type</label>
  <select name="complaint"  id="ct">
         <option value="Failure of Power supply"> Failure of Power supply</option>

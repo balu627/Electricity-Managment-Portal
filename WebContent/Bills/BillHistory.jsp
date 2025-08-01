@@ -183,107 +183,56 @@ if (user == null) {
     .date {
         white-space: nowrap;
     }
-
-    input[type="submit"] {
-        margin-top:10px;
-        margin-left:-50px;
-        background-color: #2e4053;
-        color: white;
-        padding: 10px 8px;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        width: 10%;
-        position:relative;
-        left:100px;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 20px;
-        font-family: "Lexend", sans-serif;
-        transition: background-color 0.5s;
-        letter-spacing: 1px;
-    }
     
-    input[type="submit"]:hover {
-        background-color: #2980b9;
-        box-shadow: 0px 5px 5px 0px rgba(143, 148, 155, 0.2);
-    }
+    .secondbox {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
 
-    #search-range {
-        margin-top:10px;
-        margin-left:400px;
-    }
-   
+.search {
+    background-color: #ffffffcc;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 
-    #from, #to {
-        padding: 10px 8px;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        width: 20%;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 20px;
-        font-family: "Lexend", sans-serif;
-        transition: background-color 0.5s;
-        letter-spacing: 1px;
-    }
-    
-    label {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 20px;
-        font-family: "Lexend", sans-serif;
-        letter-spacing: 1px;
-    }
-    .search{
-    	padding-bottom:1rem;
-    }
+.search label {
+    font-weight: bold;
+    color: #2e4053;
+}
+
+.search input[type="month"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Bree Serif', serif;
+}
+
+.search input[type="submit"] {
+    background-color: #004466;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search input[type="submit"]:hover {
+    background-color: #006699;
+}
+
 
 </style>
 </head>
 <body>
-
-
-<div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="home.jsp">Home</a>
-            </div>
-            
-            <div class="dropdown">
-                <a href="viewBills">Bills</a>
-                <div class="dropdown-content">
-                    <a href="viewBills">View Bill</a>
-                    <a href="BillHistory">Payment History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="index.jsp">Complaint</a>
-                <div class="dropdown-content">
-                    <a href="index.jsp">Register Complaint</a>
-                    <a href="Search.jsp">Search Complaint Status</a>
-                    <a href="Feedback.jsp">Feedback</a>
-                    <a href="history">Complaint History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="profile.jsp">Profile</a>
-            </div>
-        </div>
-        
-        <div class="user-info">
-            <span>Welcome, <%= custName != null ? custName : user %></span>
-            <button type="button" onclick="logout()">Logout</button>
-        </div>
-    </div>
-
-
+<jsp:include page="/shared/header.jsp" />
 
 <h1>Bill Payment History</h1>
  
@@ -337,29 +286,26 @@ if (paidBills == null || paidBills.isEmpty()) {
             </tbody>
         </table>
     </div>
-
-    <div >
-    
-   
-   
-    </div>
     
  <% } %>
   	<%
     	String fromm = request.getAttribute("from").toString();
     	String tom = request.getAttribute("to").toString();
     %>
- 		<form class="search" action="SearchByPeriodServlet" method="post">
+     <div class="secondbox">
+ 			<form class="search" action="SearchByPeriodServlet" method="post">
             <div class="periodinput" id="search-range">
                 <label for="from">From:</label>
                 <input type="month" id="from" name="from" value="<%= fromm%>">
-             <label for="to">To :</label>
+             	<label for="to">To :</label>
                 <input type="month" id="to" name="to" value="<%= tom %>">
             
                 <input type="submit" value="Search">
         	</div>
            
-        </form>
+        </form> 
+   
+    </div>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
     <script>

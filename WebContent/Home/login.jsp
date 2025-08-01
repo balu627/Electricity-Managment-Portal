@@ -133,7 +133,7 @@
 <body>
   <div class="main">
     <div class="container">
-      <form method="post" action="LoginServlet" class="login-form" id="loginForm">
+      <form method="post" action="<%=request.getContextPath()%>/LoginServlet" class="login-form" id="loginForm">
         <h2 class="form-title">Electricity Portal Login</h2>
         
         <% if(request.getAttribute("errorMessage") != null) { %>

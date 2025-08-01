@@ -23,7 +23,7 @@ public class SoftDeleteServlet extends HttpServlet {
 	        request.setAttribute("message", "Failed Try Again.");
 	    }
 
-	    request.getRequestDispatcher("UpdateAck.jsp").forward(request, response);
+	    request.getRequestDispatcher("Profile/UpdateAck.jsp").forward(request, response);
 		
 	}
 

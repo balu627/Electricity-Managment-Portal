@@ -94,120 +94,46 @@ body {
         .user-info button:hover {
             background-color: #e60000;
         }
-
-        h2 {
-            color: #2c3e50;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .form-container {
-            background-color: rgba(255, 255, 255, 0.95);
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #2e4053;
-            text-align: center;
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 15px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            resize: vertical;
-            margin-bottom: 20px;
-        }
-
-        .rating {
-            display: flex;
-            justify-content: center;
-            flex-direction: row-reverse;
-            gap: 5px;
-            margin: 20px 0;
-        }
-
-        .rating input[type="radio"] {
-            display: none;
-        }
-
-        .rating label {
-            font-size: 30px;
-            color: #ccc;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .rating input[type="radio"]:checked ~ label,
-        .rating label:hover,
-        .rating label:hover ~ label {
-            color: gold;
-        }
-
-        input[type="submit"] {
-            background-color: #2e4053;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #2980b9;
-        }
+    
 </style>
 <body>
 <div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="home.jsp">Home</a>
-            </div>
-            
-            <div class="dropdown">
-                <a href="viewBills">Bills</a>
-                <div class="dropdown-content">
-                    <a href="viewBills">View Bill</a>
-                    <a href="BillHistory">Payment History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="index.jsp">Complaint</a>
-                <div class="dropdown-content">
-                    <a href="index.jsp">Register Complaint</a>
-                    <a href="Search.jsp">Search Complaint Status</a>
-                    <a href="Feedback.jsp">Feedback</a>
-                    <a href="history">Complaint History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="ProfileServlet">Profile</a>
+    <div class="menu">
+        <div class="dropdown">
+            <a href="<%=request.getContextPath()%>/Home/home.jsp">Home</a>
+        </div>
+
+        <div class="dropdown">
+            <a href="<%=request.getContextPath()%>/viewBills">Bills</a>
+            <div class="dropdown-content">
+                <a href="<%=request.getContextPath()%>/viewBills">View Bill</a>
+                <a href="<%=request.getContextPath()%>/BillHistory">Payment History</a>
             </div>
         </div>
-        
-        <div class="user-info">
-            <span>Welcome, <%= custName != null ? custName : user %></span>
-            <button type="button" onclick="logout()">Logout</button>
+
+        <div class="dropdown">
+            <a href="<%=request.getContextPath()%>/Complaint/index.jsp"">Complaint</a>
+            <div class="dropdown-content">
+                <a href="<%=request.getContextPath()%>/Complaint/index.jsp">Register Complaint</a>
+                <a href="<%=request.getContextPath()%>/Complaint/Search.jsp">Search Complaint Status</a>
+                <a href="<%=request.getContextPath()%>/Complaint/Feedback.jsp">Feedback</a>
+                <a href="<%=request.getContextPath()%>/history">Complaint History</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="<%=request.getContextPath()%>/ProfileServlet">Profile</a>
         </div>
     </div>
+
+    <div class="user-info">
+        <span>Welcome, <%= custName != null ? custName : user %></span>
+        <form action="<%=request.getContextPath()%>/LogoutServlet" method="post" style="margin: 0;">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</div>
+
 
 </body>
 </html>

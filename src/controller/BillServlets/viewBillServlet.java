@@ -48,6 +48,6 @@ public class viewBillServlet extends HttpServlet {
         }
 
         request.setAttribute("unpaidBills", data);
-        request.getRequestDispatcher("ViewBill.jsp").forward(request, response);
+        request.getRequestDispatcher("Bills/ViewBill.jsp").forward(request, response);
     }
 }
