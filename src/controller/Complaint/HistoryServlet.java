@@ -19,8 +19,18 @@ import dao.ComplaintDao;
 public class HistoryServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-			HttpSession session = request.getSession();
+
+		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+		 response.setHeader("Pragma", "no-cache");
+		 response.setDateHeader("Expires", 0);
+		 
+		 HttpSession session = request.getSession();
+		 
+		    if (session  == null || session.getAttribute("user") == null) {
+		        response.sendRedirect("Home/login.jsp");
+		        return;
+		    }
+		    
 			long consumerNo = Long.parseLong((String) session.getAttribute("consumerNo"));
 		
 			ComplaintDao dao = new ComplaintDao();

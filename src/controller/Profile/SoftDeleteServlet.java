@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ProfileDao;
 
@@ -14,7 +15,10 @@ public class SoftDeleteServlet extends HttpServlet {
     
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		long consumerNo = 1234567890123L;
+		
+		HttpSession session = request.getSession();
+		
+		long consumerNo = Long.parseLong((String) session.getAttribute("consumerNo"));
 		boolean softdone = ProfileDao.softDeleteCustomer(consumerNo);
 		if (softdone) {
 	        request.setAttribute("message", "Deleted successfully!");

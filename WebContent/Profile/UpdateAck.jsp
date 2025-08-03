@@ -72,22 +72,22 @@ background-color: #2c80b4;
     <title>Status Update</title>
 </head>
 <script>
-
     setTimeout(function() {
-        let ans = '<%= request.getAttribute("path") %>';
-        if(ans=="login.jsp")
-        	{
-        		window.location.href = 'LogoutServlet';
-        	}
-        else
-        	{
-        	window.location.href='<%= request.getAttribute("path")%>'
-        	}
+        let ans = <%= request.getAttribute("path") == null ? "\"\"" : "\"" + request.getAttribute("path") + "\"" %>;
+
+        if (ans === "login.jsp") {
+        	document.getElementById("logoutForm").submit();
+        } else if (ans !== "") {
+            window.location.href = ans;
+        }
     }, 2000);
 </script>
+
 <body>
 <div class="container">
     <h2><%= request.getAttribute("message") %></h2>
+    <form id="logoutForm" action="LogoutServlet" method="post" style="display:none;">
+</form>
 
 </div>
 </body>

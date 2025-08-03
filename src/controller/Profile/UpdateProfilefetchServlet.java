@@ -18,7 +18,7 @@ public class UpdateProfilefetchServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 HttpSession session = request.getSession();
 		 if (session  == null || session.getAttribute("user") == null) {
-		        response.sendRedirect("login.jsp");
+		        response.sendRedirect("Home/login.jsp");
 		        return;
 		    }
 		 

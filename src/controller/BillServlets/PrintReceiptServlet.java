@@ -30,7 +30,7 @@ public class PrintReceiptServlet extends HttpServlet {
 		 HttpSession session = request.getSession();
 		 
 		    if (session  == null || session.getAttribute("user") == null) {
-		        response.sendRedirect("login.jsp");
+		        response.sendRedirect("Home/login.jsp");
 		        return;
 		    }
 		
