@@ -293,7 +293,7 @@ if (paidBills == null || paidBills.isEmpty()) {
     	String tom = request.getAttribute("to").toString();
     %>
      <div class="secondbox">
- 			<form class="search" action="SearchByPeriodServlet" method="post">
+ 			<form class="search" action="<%=request.getContextPath()%>/SearchByPeriodServlet" method="post">
             <div class="periodinput" id="search-range">
                 <label for="from">From:</label>
                 <input type="month" id="from" name="from" value="<%= fromm%>">

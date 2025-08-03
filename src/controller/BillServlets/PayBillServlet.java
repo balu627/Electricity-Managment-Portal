@@ -45,7 +45,6 @@ public class PayBillServlet extends HttpServlet {
 			        for (String billNo : selectedBills) 
 			        {
 			        	int num = Integer.parseInt(billNo);
-			        	
 		        	
 		        		ResultSet rs = BillDao.getBillsByNo(num,con);	        		
 			            while(rs.next())

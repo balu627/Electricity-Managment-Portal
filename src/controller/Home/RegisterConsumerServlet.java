@@ -1,4 +1,4 @@
-package controller;
+package controller.Home;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.InsertTempdata;
 import dao.UserDao;
 import bean.CustomerData;
 
@@ -16,7 +15,6 @@ public class RegisterConsumerServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
         long ConsumerID = Long.parseLong(request.getParameter("ConsumerID"));
         int billNo = Integer.parseInt(request.getParameter("billNo"));
         String title = request.getParameter("title");
@@ -32,7 +30,7 @@ public class RegisterConsumerServlet extends HttpServlet {
 
         if (!password.equals(confirmPassword)) {
             request.setAttribute("errorMessage", "Passwords do not match!");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+            request.getRequestDispatcher("Home/consumer_register.jsp").forward(request, response);
             return;
         }
         
@@ -59,21 +57,21 @@ public class RegisterConsumerServlet extends HttpServlet {
                     request.setAttribute("custName", customer.getTitle() + " " + customer.getCustName());
                     request.setAttribute("email", customer.getEmail());
                     request.setAttribute("userId", customer.getUserId());
-                    request.getRequestDispatcher("success.jsp").forward(request, response);
+                    request.getRequestDispatcher("Home/regsuccess.jsp").forward(request, response);
                 } else {
                     request.setAttribute("errorMessage", "Registration failed. Please try again.");
-                    request.getRequestDispatcher("consumer_register.jsp").forward(request, response);
+                    request.getRequestDispatcher("Home/consumer_register.jsp").forward(request, response);
                 }
             } else {
-                request.setAttribute("message", isOk);
-                request.setAttribute("redirectPage", "consumer_register.jsp");
-                request.getRequestDispatcher("message.jsp").forward(request, response);
+                   request.setAttribute("message", isOk);
+                request.setAttribute("redirectPage", "Home/consumer_register.jsp");
+                request.getRequestDispatcher("Home/message.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Error: " + e.getMessage());
-            request.getRequestDispatcher("consumer_register.jsp").forward(request, response);
+            request.getRequestDispatcher("Home/consumer_register.jsp").forward(request, response);
         }
     }
 }

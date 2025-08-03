@@ -171,40 +171,7 @@ box-shadow: 0px 5px 5px 0px rgba(143, 148, 155, 0.2);
 </style>
 </head>
 <body>
-<div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="home.jsp">Home</a>
-            </div>
-            
-            <div class="dropdown">
-                <a href="viewBills">Bills</a>
-                <div class="dropdown-content">
-                    <a href="viewBills">View Bill</a>
-                    <a href="BillHistory">Payment History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="index.jsp">Complaint</a>
-                <div class="dropdown-content">
-                    <a href="index.jsp">Register Complaint</a>
-                    <a href="Search.jsp">Search Complaint Status</a>
-                    <a href="Feedback.jsp">Feedback</a>
-                    <a href="history">Complaint History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="ProfileServlet">Profile</a>
-            </div>
-        </div>
-        
-        <div class="user-info">
-            <span>Welcome, <%= custName != null ? custName : user %></span>
-            <button type="button" onclick="logout()">Logout</button>
-        </div>
-    </div>
+ <jsp:include page="/shared/header.jsp" />
 <div class="container">
 <h2>Update Customer Profile</h2>
 

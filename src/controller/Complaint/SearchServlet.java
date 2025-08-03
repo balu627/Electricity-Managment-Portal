@@ -1,4 +1,4 @@
-package controller;
+package controller.Complaint;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class SearchServlet extends HttpServlet {
 				complaint = dao.getComplaintById(id);
 				 request.setAttribute("complaint", complaint);
 				 request.setAttribute("complaintId", id);
-			        RequestDispatcher rd = request.getRequestDispatcher("Search.jsp");
+			        RequestDispatcher rd = request.getRequestDispatcher("Complaint/Search.jsp");
 			        rd.forward(request, response);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

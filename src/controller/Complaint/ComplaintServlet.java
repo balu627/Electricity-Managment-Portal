@@ -1,4 +1,4 @@
-package controller;
+package controller.Complaint;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -41,7 +41,7 @@ public class ComplaintServlet extends HttpServlet {
 			dao.registercomplaint(user, rdcid,st);
 			request.setAttribute("rdcid",rdcid );
 			
-		    RequestDispatcher rd = request.getRequestDispatcher("confirm.jsp");
+		    RequestDispatcher rd = request.getRequestDispatcher("Complaint/confirm.jsp");
 		    rd.forward(request, response);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

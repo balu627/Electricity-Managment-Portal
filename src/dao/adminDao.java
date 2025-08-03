@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import util.DBBillTableCreator;
-import util.DBCompliantDataTableCreator;
+//import util.DBBillTableCreator;
+//import util.DBCompliantDataTableCreator;
 import util.DBConnection;
-import util.DBUserTableCreator;
+//import util.DBUserTableCreator;
 
 public class adminDao {
     public static String getTotalcust() {
-        DBUserTableCreator.createUserTable();
+//        DBUserTableCreator.createUserTable();
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -36,11 +36,11 @@ public class adminDao {
     }
     
     public static String getpendComplaints() {
-        try {
-            DBCompliantDataTableCreator.createComplaintDataTable();
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
-        }
+//        try {
+////            DBCompliantDataTableCreator.createComplaintDataTable();
+//        } catch (ClassNotFoundException e1) {
+//            e1.printStackTrace();
+//        }
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -65,7 +65,7 @@ public class adminDao {
     }
     
     public static String getBillsGenerated() {
-        DBBillTableCreator.createBillTable();
+//        DBBillTableCreator.createBillTable();
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;

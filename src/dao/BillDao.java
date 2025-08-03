@@ -11,13 +11,13 @@ import java.util.Locale;
 
 import bean.Bill;
 import util.DBConnection;
-import util.DBBillTableCreator;
+//import util.DBBillTableCreator;
 
 public class BillDao {
     public static int addBill(Bill bill) {
         int status = 0;
         try {
-            DBBillTableCreator.createBillTable();
+//            DBBillTableCreator.createBillTable();
             Connection con = DBConnection.getConnection();
             ResultSet stat = checkMonthBillExists(bill.getConsumerNo(),bill.getMonth());
             if(stat.next())

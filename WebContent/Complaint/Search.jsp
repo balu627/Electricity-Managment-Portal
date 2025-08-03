@@ -197,7 +197,7 @@
 <h2>Search Complaint By Id</h2>
 
     <div id="search-container">
-        <form method="post" action="search">
+        <form method="post" action="<%=request.getContextPath()%>/search">
                 <p><b>Enter Complaint ID:</b></p> 
                 <input type="text" name="complaintId" required />
                 <input type="submit" value="Search" />

@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import util.DBConnection;
-import util.DBUserTableCreator;
+//import util.DBUserTableCreator;
 
 public class LoginDao {
 	
@@ -36,8 +36,8 @@ public class LoginDao {
 		String tableName = userType.equals("admin") ? "AdminCred" : "CustomerData";
 		
         try {
-            DBUserTableCreator.createUserTable();
-            DBUserTableCreator.createAdminTable();
+//            DBUserTableCreator.createUserTable();
+//            DBUserTableCreator.createAdminTable();
             Connection con = DBConnection.getConnection();
             
             String sql = "SELECT * FROM "+  tableName +" WHERE userId = ?";

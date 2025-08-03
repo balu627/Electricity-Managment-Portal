@@ -301,48 +301,11 @@ response.setDateHeader("Expires", 0);
 <%
     MonthName mn = new MonthName();    
     List<Bill> bills = (List<Bill>) request.getAttribute("selectedBills");
-    System.out.println(bills.size());
     int totalAmount = 0;
 %>
 
 <body>
-<div class="topbar">
-        <div class="menu">
-            <div class="dropdown">
-                <a href="home.jsp">Home</a>
-            </div>
-            
-            <div class="dropdown">
-                <a href="viewBills">Bills</a>
-                <div class="dropdown-content">
-                    <a href="viewBills">View Bill</a>
-                    <a href="BillHistory">Payment History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="index.jsp">Complaint</a>
-                <div class="dropdown-content">
-                    <a href="index.jsp">Register Complaint</a>
-                    <a href="Search.jsp">Search Complaint Status</a>
-                    <a href="Feedback.jsp">Feedback</a>
-                    <a href="history">Complaint History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="ProfileServlet">Profile</a>
-            </div>
-        </div>
-        
-        <div class="user-info">
-            <span>Welcome, <%= custName != null ? custName : user %></span>
-            <button type="button" onclick="logout()">Logout</button>
-        </div>
-    </div>
-
-
-
+<jsp:include page="/shared/header.jsp" />
 
     <h2 class="payment-heading">Payment Page</h2>
     

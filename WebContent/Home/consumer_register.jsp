@@ -204,7 +204,7 @@
               </div>
             <% } %>
             
-            <form method="post" action="RegisterConsumerServlet" class="register-form" id="registerForm" onsubmit="return validateForm()">
+            <form method="post" action="<%= request.getContextPath() %>/RegisterConsumerServlet" class="register-form" id="registerForm" onsubmit="return validateForm()">
 
 
 				<div class="form-group">

@@ -64,7 +64,7 @@ public class PrintReceiptServlet extends HttpServlet {
 		request.setAttribute("Tid",transactionid);
 		request.setAttribute("paymentmode",modeofTxn);
 		request.setAttribute("totalamount", totalAmount);
-	    request.getRequestDispatcher("SuccessScreen.jsp").forward(request, response);
+	    request.getRequestDispatcher("/Bills/SuccessScreen.jsp").forward(request, response);
 	}
 
 }

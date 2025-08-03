@@ -1,4 +1,4 @@
-package controller;
+package controller.Complaint;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,7 +27,7 @@ public class ChangeStatusServlet extends HttpServlet {
 						dao.changestatus(id);
 //						request.setAttribute("rdcid",id );
 						
-					    RequestDispatcher rd = request.getRequestDispatcher("changed.jsp");
+					    RequestDispatcher rd = request.getRequestDispatcher("Complaint/changed.jsp");
 					    rd.forward(request, response);
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block

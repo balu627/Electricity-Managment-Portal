@@ -109,7 +109,7 @@
       </div>
       
       <p>Your account has been successfully created.</p>
-      <a href="login.jsp" class="login-button">Proceed to Login</a>
+      <a href="Home/login.jsp" class="login-button">Proceed to Login</a>
     </div>
   </div>
 </body>

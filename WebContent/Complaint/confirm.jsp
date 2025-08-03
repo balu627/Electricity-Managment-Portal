@@ -60,7 +60,7 @@
     </div>
     <script>
      setTimeout(function() {
-        window.location.href = 'home.jsp';
+        window.location.href = 'Home/home.jsp';
     }, 2000);
      </script>
 </body>

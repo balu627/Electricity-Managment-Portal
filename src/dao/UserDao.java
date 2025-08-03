@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import bean.CustomerData;
-import util.DBBillTableCreator;
+//import util.DBBillTableCreator;
 import util.DBConnection;
-import util.DBUserTableCreator;
+//import util.DBUserTableCreator;
 
 public class UserDao {
 
@@ -37,7 +37,7 @@ public class UserDao {
     public static String checkConsumerIdandBillInBills(CustomerData customer) {
         String message = "";
         try {
-        	DBBillTableCreator.createBillTable();
+//        	DBBillTableCreator.createBillTable();
             Connection con = DBConnection.getConnection();
 
             String sql = "SELECT billNo FROM Bill WHERE consumerNo = ?";
@@ -51,7 +51,6 @@ public class UserDao {
             while (rs.next()) {
                 consumerExists = true;
                 int billNo = rs.getInt("billNo");
-                System.out.println(billNo);
                 if (billNo == customer.getBillNo()) {
                     billExists = true;
                     break;
@@ -80,7 +79,7 @@ public class UserDao {
     public static int checkUserId(CustomerData customer) {
         int status = 0;
         try {
-        	DBUserTableCreator.createUserTable();
+//        	DBUserTableCreator.createUserTable();
             Connection con = DBConnection.getConnection();
 
             String sql = "SELECT * FROM CustomerData WHERE userId = ?";
@@ -102,7 +101,7 @@ public class UserDao {
     public static int checkEmailId(CustomerData customer) {
         int status = 0;
         try {
-        	DBUserTableCreator.createUserTable();
+//        	DBUserTableCreator.createUserTable();
             Connection con = DBConnection.getConnection();
 
             String sql = "SELECT * FROM CustomerData WHERE email = ?";
@@ -124,7 +123,7 @@ public class UserDao {
     public static int checkBillNo(CustomerData customer) {
         int status = 0;
         try {
-            DBUserTableCreator.createUserTable();
+//            DBUserTableCreator.createUserTable();
             Connection con = DBConnection.getConnection();
 
             String sql = "SELECT * FROM CustomerData WHERE billNo = ?";
@@ -146,7 +145,7 @@ public class UserDao {
     public static int checkConsumerId(CustomerData customer) {
         int status = 0;
         try {
-            DBUserTableCreator.createUserTable();;
+//            DBUserTableCreator.createUserTable();;
             Connection con = DBConnection.getConnection();
 
             String sql = "SELECT * FROM CustomerData WHERE consumerId = ?";
@@ -168,7 +167,7 @@ public class UserDao {
     public static int addUser(CustomerData customer) {
         int status = 0;
         try {
-            DBUserTableCreator.createUserTable();
+//            DBUserTableCreator.createUserTable();
             Connection con = DBConnection.getConnection();
 
             String sql = "INSERT INTO CustomerData (consumerId, billNo, title, name, age, email, countryCode, mobile, address, userId, password, status) "

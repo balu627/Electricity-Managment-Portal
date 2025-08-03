@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.ComplaintRegistration;
-import util.DBCompliantDataTableCreator;
+//import util.DBCompliantDataTableCreator;
 import util.DBConnection;
 
 public class HistoryDao {
 	 public List<ComplaintRegistration> getComplaintsByStatus(String status) {
-		 	try {
-				DBCompliantDataTableCreator.createComplaintDataTable();
-			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
-				System.out.println("table exits");
-			}
+//		 	try {
+////				DBCompliantDataTableCreator.createComplaintDataTable();
+//			} catch (ClassNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				System.out.println("table exits");
+//			}
 		    List<ComplaintRegistration> list = new ArrayList<>();
 		    try (Connection conn = DBConnection.getConnection()) {
 		        String sql = "SELECT * FROM complaint WHERE status=?";

@@ -6,7 +6,7 @@
 	
     String user = (String) session.getAttribute("user");
     if (user == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Home/login.jsp");
         return;
     }
     
@@ -137,7 +137,7 @@
 
 <jsp:include page="/shared/header.jsp" />
 
-	<form class="form" method="post" action="register1">
+	<form class="form" method="post" action="<%=request.getContextPath()%>/register1">
 <label for="ct"  id=ct1>Complaint/Service Type</label>
  <select name="complaint"  id="ct">
         <option value="Failure of Power supply"> Failure of Power supply</option>

@@ -43,7 +43,7 @@
 <script>
 
     setTimeout(function() {
-        window.location.href = 'home.jsp';
+        window.location.href = '<%=request.getContextPath()%>/Home/home.jsp';
     }, 2000);
 </script>
 <body>

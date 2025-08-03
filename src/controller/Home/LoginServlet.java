@@ -1,4 +1,4 @@
-package controller;
+package controller.Home;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -12,20 +12,19 @@ import javax.websocket.Session;
 
 import dao.LoginDao;
 import dao.adminDao;
-import util.DBUserTableCreator;
+//import util.DBUserTableCreator;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	System.out.println("loginservlet");
         String userType = request.getParameter("userType");
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
 
         try {
-            DBUserTableCreator.createAdminTable();
+//            DBUserTableCreator.createAdminTable();
 
             String result = LoginDao.checklogin(userType, userId, password);
 
@@ -81,7 +80,7 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Error: " + e.getMessage());
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("Home/login.jsp").forward(request, response);
         }
     }
 }

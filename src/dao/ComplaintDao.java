@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import bean.ComplaintRegistration;
 import util.DBConnection;
-import util.DBCompliantDataTableCreator;
+//import util.DBCompliantDataTableCreator;
 
 public class ComplaintDao {
 
@@ -19,7 +19,7 @@ public class ComplaintDao {
 
         try {
             con = DBConnection.getConnection();
-            DBCompliantDataTableCreator.createComplaintDataTable();
+//            DBCompliantDataTableCreator.createComplaintDataTable();
             String sql = "INSERT INTO COMPLAINT VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(sql);
 

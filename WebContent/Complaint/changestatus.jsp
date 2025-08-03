@@ -139,7 +139,7 @@ input[type="submit"]:hover {
 </div>
 <div class="content-box">
     <h2>Change Complaint Status</h2>
-    <form method="post" action="changestatus">
+    <form method="post" action="<%=request.getContextPath()%>/changestatus">
         <input type="text" name="complaintId" placeholder="Enter Complaint ID" required />
         <input type="submit" value="Search" />
     </form>

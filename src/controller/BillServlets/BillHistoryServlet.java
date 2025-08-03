@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Bill;
 import dao.BillDao;
-import util.DBBillTableCreator;
+//import util.DBBillTableCreator;
 
 @WebServlet("/BillHistory")
 public class BillHistoryServlet extends HttpServlet {
@@ -33,7 +33,7 @@ public class BillHistoryServlet extends HttpServlet {
 		    }
 		
 //		HttpSession session = request.getSession();
-		 DBBillTableCreator.createBillTable();
+//		 DBBillTableCreator.createBillTable();
 		long user = Long.parseLong((String) session.getAttribute("consumerNo"));
 		List<Bill> paidBillsFiveMonths = new ArrayList<>();
 		ResultSet rs = BillDao.getPastFiveMonths(user);
