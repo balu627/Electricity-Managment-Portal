@@ -13,15 +13,15 @@ public class DBCompliantDataTableCreator {
             con = DBConnection.getConnection();
             stmt = con.createStatement();
             String sql = "CREATE TABLE COMPLAINT ("
-                    + "TYPE VARCHAR(50), "
-                    + "CATEGORY VARCHAR(50), "
-                    + "CONTACTPERSON VARCHAR(100), "
-                    + "LANDMARK VARCHAR(100), "
-                    + "CONSUMERNUMBER BIGINT, "
-                    + "Problem VARCHAR(500), "
-                    + "ADDRESS VARCHAR(200), "
-                    + "MOBILE BIGINT, "
-                    + "rdcid INT, "
+            		+ "COMPLAINTID INT PRIMARY KEY,"
+            		+ "CONSUMERNO BIGINT,"
+            		+ "NAME VARCHAR(100),"
+            		+ "MOBILE VARCHAR(50),"
+            		+ "CATEGORYTYPE VARCHAR(50),"
+                    + "COMPLAINTTYPE VARCHAR(50), "
+                    + "LANDMARK VARCHAR(100), "   
+                    + "ADDRESS VARCHAR(200),"
+                    + "DESCRIPTION VARCHAR(500),"
                     + "STATUS VARCHAR(50))";
             stmt.executeUpdate(sql);
             System.out.println("Complaint table created successfully!");

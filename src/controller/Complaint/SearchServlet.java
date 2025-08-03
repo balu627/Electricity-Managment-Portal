@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.ComplaintRegistration;
+import bean.ComplaintData;
 import dao.SearchDao;
 
 
@@ -20,7 +20,7 @@ public class SearchServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		int id = Integer.parseInt(request.getParameter("complaintId"));
         SearchDao dao = new SearchDao();
-        ComplaintRegistration complaint = null;
+        ComplaintData complaint = null;
 
 			try {
 				complaint = dao.getComplaintById(id);

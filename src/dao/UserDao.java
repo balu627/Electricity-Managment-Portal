@@ -8,7 +8,6 @@ import java.sql.Statement;
 import bean.CustomerData;
 //import util.DBBillTableCreator;
 import util.DBConnection;
-//import util.DBUserTableCreator;
 
 public class UserDao {
 

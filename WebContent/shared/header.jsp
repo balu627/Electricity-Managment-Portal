@@ -112,10 +112,10 @@ body {
         </div>
 
         <div class="dropdown">
-            <a href="<%=request.getContextPath()%>/Complaint/index.jsp"">Complaint</a>
+            <a href="<%=request.getContextPath()%>/ComplaintRegistrationLoading">Complaint</a>
+
             <div class="dropdown-content">
-                <a href="<%=request.getContextPath()%>/Complaint/index.jsp">Register Complaint</a>
-                <a href="<%=request.getContextPath()%>/Complaint/Search.jsp">Search Complaint Status</a>
+                <a href="<%=request.getContextPath()%>/ComplaintRegistrationLoading">Register Complaint</a>
                 <a href="<%=request.getContextPath()%>/Complaint/Feedback.jsp">Feedback</a>
                 <a href="<%=request.getContextPath()%>/history">Complaint History</a>
             </div>

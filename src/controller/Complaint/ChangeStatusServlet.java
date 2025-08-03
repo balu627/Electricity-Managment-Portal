@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.ComplaintRegistration;
+import bean.ComplaintData;
 import dao.ChangeStatusDao;
 import dao.SearchDao;
 

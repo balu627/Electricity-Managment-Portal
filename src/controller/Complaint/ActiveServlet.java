@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.ComplaintRegistration;
+import bean.ComplaintData;
 import dao.HistoryDao;
 
 
@@ -20,8 +20,7 @@ public class ActiveServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		 HistoryDao dao = new HistoryDao();
-		 List<ComplaintRegistration> unsolved = dao.getComplaintsByStatus("pending");
+		 List<ComplaintData> unsolved = dao.getComplaintsByStatus("pending");
 		 
 		 request.setAttribute("unsolved", unsolved);
 		 RequestDispatcher rd = request.getRequestDispatcher("/Complaint/active.jsp");

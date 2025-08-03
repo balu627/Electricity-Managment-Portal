@@ -9,28 +9,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import bean.ComplaintRegistration;
+import bean.ComplaintData;
 import dao.ComplaintDao;
-import dao.HistoryDao;
 
 
 @WebServlet("/history")
 public class HistoryServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+			HttpSession session = request.getSession();
+			long consumerNo = Long.parseLong((String) session.getAttribute("consumerNo"));
 		
-		 HistoryDao dao = new HistoryDao();
+			ComplaintDao dao = new ComplaintDao();
+	        List<ComplaintData> complaints = dao.getComplaints(consumerNo);
 
-	        List<ComplaintRegistration> pending = dao.getComplaintsByStatus("pending");
-	        List<ComplaintRegistration> solved = dao.getComplaintsByStatus("solved");
-
-	        request.setAttribute("PendingComplaints",pending);
-	        request.setAttribute("solvedComplaints", solved);
+	        request.setAttribute("Complaints",complaints);
 
 	        RequestDispatcher rd = request.getRequestDispatcher("Complaint/history.jsp");
 	        rd.forward(request, response);
-		//doGet(request, response);
 	}
 
 	

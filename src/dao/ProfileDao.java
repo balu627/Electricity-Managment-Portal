@@ -105,6 +105,7 @@ public class ProfileDao {
                 customer.setMobile(rs.getLong("mobile"));
                 customer.setUserId(rs.getString("userId"));
                 customer.setPassword(rs.getString("password"));
+                customer.setAddress(rs.getString("address"));
             }
             
             con.close();

@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import bean.ComplaintRegistration;
+import bean.ComplaintData;
 import util.DBConnection;
 
 public class SearchDao
 {
-	 public ComplaintRegistration getComplaintById(int id) throws ClassNotFoundException {
+	 public ComplaintData getComplaintById(int id) throws ClassNotFoundException {
 	        
 	        try 
 	        {
@@ -19,9 +19,7 @@ public class SearchDao
 	            ps.setInt(1, id);
 	            ResultSet rs = ps.executeQuery();
 	            if (rs.next()) {
-	                ComplaintRegistration complaint = new ComplaintRegistration(rs.getString("Type"), rs.getString("Category"), rs.getString("Contactperson"),
-	                		rs.getString("Landmark"), rs.getLong("consumernumber"), rs.getString("Problem"),
-	                		rs.getLong("Mobile"), rs.getString("Address"), rs.getInt("rdcid"), rs.getString("status"));
+	                ComplaintData complaint = new ComplaintData();
 	                return complaint;
 	            }
 	        } catch (SQLException e) {

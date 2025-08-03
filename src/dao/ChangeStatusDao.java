@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import bean.ComplaintRegistration;
+import bean.ComplaintData;
 import util.DBConnection;
 
 public class ChangeStatusDao {
