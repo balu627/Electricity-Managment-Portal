@@ -14,7 +14,7 @@ public class ChangeUserStatusDoa {
 	        Connection con = DBConnection.getConnection();
 	        
 	        
-	        String sql = "UPDATE CustomerData SET status = 'active' WHERE userId = ?";
+	        String sql = "UPDATE CustomerData SET status = 'Active' WHERE userId = ?";
 	        PreparedStatement ps = con.prepareStatement(sql);
 	        ps.setString(1, userId);
 

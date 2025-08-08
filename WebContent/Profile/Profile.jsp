@@ -184,17 +184,18 @@
 
     <div id="subContainer">
         <div class="child1">
-            <p><strong>Consumer No:</strong><%= data.getConsumerId() %></p>
-            <p><strong>Title:</strong><%= data.getTitle() %></p>
-            <p><strong>Name:</strong><%= data.getCustName() %></p>
-            <p><strong>Email:</strong><%= data.getEmail() %></p>
+            <p><strong>Consumer No : </strong><%= data.getConsumerId() %></p>
+            <p><strong>Title : </strong><%= data.getTitle() %></p>
+            <p><strong>Name : </strong><%= data.getCustName() %></p>
+            <p><strong>Email : </strong><%= data.getEmail() %></p>
+            <p><strong>Address : </strong><%= data.getAddress() %></p>
         </div>
 
         <div class="child2">
-            <p><strong>Country Code:</strong><%= data.getCountryCode() %></p>
-            <p><strong>Mobile Number:</strong><%= data.getMobile() %></p>
-            <p><strong>User ID:</strong><%= data.getUserId() %></p>
-            <p><strong>Password:</strong><%= data.getPassword() %></p>
+            <p><strong>Country Code : </strong><%= data.getCountryCode() %></p>
+            <p><strong>Mobile Number : </strong><%= data.getMobile() %></p>
+            <p><strong>User ID : </strong><%= data.getUserId() %></p>
+            <p><strong>Password : </strong><%= data.getPassword() %></p>
         </div>
     </div>
 
@@ -205,7 +206,7 @@
 </form>
 
 <form action="SoftDeleteServlet" method="post" style="display:inline; margin-left:10px;">
-    <input type="hidden" name="consumerNo" value="<%= data.getConsumerId() %>">
+    <input type="hidden" name="userId" value="<%= data.getUserId() %>">
     <input type="submit" value="Deactivate Account">
 </form>
 

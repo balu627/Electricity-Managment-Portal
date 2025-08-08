@@ -20,7 +20,7 @@
 
 <script>
     setTimeout(function() {
-        window.location.href = "Home/adminhome.jsp";
+        window.location.href = "<%=request.getContextPath()%>/AdminHomeServlet";
     }, 1000);
 </script>
 

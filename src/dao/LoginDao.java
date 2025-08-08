@@ -36,8 +36,6 @@ public class LoginDao {
 		String tableName = userType.equals("admin") ? "AdminCred" : "CustomerData";
 		
         try {
-//            DBUserTableCreator.createUserTable();
-//            DBUserTableCreator.createAdminTable();
             Connection con = DBConnection.getConnection();
             
             String sql = "SELECT * FROM "+  tableName +" WHERE userId = ?";
@@ -49,7 +47,7 @@ public class LoginDao {
             	if(!tableName.equals("AdminCred"))
             	{
             		String status = rs.getString("status");
-                	if(status.equals("inactive"))
+                	if(status.equals("Inactive"))
                 	{
                 		return status;
                 	}

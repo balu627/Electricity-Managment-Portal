@@ -12,15 +12,16 @@ import util.DBConnection;
 
 public class ProfileDao {
 	
-	public static boolean softDeleteCustomer(long consumerNo) {
+	public static boolean ChangeUserStatus(String userId,String nstatus) {
 	    boolean status = false;
 	    try {
 	        Connection con = DBConnection.getConnection();
 	        
 	        
-	        String sql = "UPDATE CustomerData SET status = 'inactive' WHERE consumerId = ?";
+	        String sql = "UPDATE CustomerData SET status = ? WHERE userId = ?";
 	        PreparedStatement ps = con.prepareStatement(sql);
-	        ps.setLong(1, consumerNo);
+	        ps.setString(1, nstatus);
+	        ps.setString(2, userId);
 
 	        int rowsUpdated = ps.executeUpdate();
 
@@ -115,6 +116,62 @@ public class ProfileDao {
         }
         return customer;
     }
+	
+	public int checkEmailId(CustomerData customer)
+	{
+		try {
+        	
+            Connection con = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM CustomerData WHERE email = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, customer.getEmail());
+
+            ResultSet rs = ps.executeQuery();
+            
+            
+            while(rs.next()) {
+                if(rs.getLong("consumerId")!=customer.getConsumerId())
+                {
+                	return 1;
+                }
+            }
+            
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return 0;
+	}
+	
+	public int checkUserId(CustomerData customer)
+	{
+		try {
+        	
+            Connection con = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM CustomerData WHERE userId = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, customer.getUserId());
+
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                if(rs.getLong("consumerId")!=customer.getConsumerId())
+                {
+                	return 1;
+                }
+                
+            }
+            
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return 0;
+	}
 
 
 }

@@ -19,14 +19,15 @@ public class SoftDeleteServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		long consumerNo = Long.parseLong((String) session.getAttribute("consumerNo"));
-		boolean softdone = ProfileDao.softDeleteCustomer(consumerNo);
+		String userId = request.getParameter("userId");
+		boolean softdone = ProfileDao.ChangeUserStatus(userId,"Inactive");
 		if (softdone) {
 	        request.setAttribute("message", "Deleted successfully!");
 	        request.setAttribute("path","login.jsp");
 	    } else {
 	        request.setAttribute("message", "Failed Try Again.");
 	    }
-
+		
 	    request.getRequestDispatcher("Profile/UpdateAck.jsp").forward(request, response);
 		
 	}

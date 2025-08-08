@@ -74,10 +74,14 @@ background-color: #2c80b4;
 <script>
     setTimeout(function() {
         let ans = <%= request.getAttribute("path") == null ? "\"\"" : "\"" + request.getAttribute("path") + "\"" %>;
-
         if (ans === "login.jsp") {
         	document.getElementById("logoutForm").submit();
-        } else if (ans !== "") {
+        }
+        else if(ans === "UpdateProfileServlet") 
+        {
+        	document.getElementById("dataExists").submit();
+        }
+        else if (ans !== "") {
             window.location.href = ans;
         }
     }, 2000);
@@ -86,8 +90,8 @@ background-color: #2c80b4;
 <body>
 <div class="container">
     <h2><%= request.getAttribute("message") %></h2>
-    <form id="logoutForm" action="LogoutServlet" method="post" style="display:none;">
-</form>
+    <form id="logoutForm" action="LogoutServlet" method="post" style="display:none;"></form>
+	<form id="dataExists" action="UpdateProfileServlet" method="post" style="display:none;">
 
 </div>
 </body>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.ProfileDao;
 import dao.ChangeUserStatusDoa;
 
 @WebServlet("/restoreAccount")
@@ -16,7 +17,7 @@ public class RestoreAccount extends HttpServlet {
 
         String userId = request.getParameter("userId");
 
-        ChangeUserStatusDoa.updatestatus(userId);
+        ProfileDao.ChangeUserStatus(userId,"Active");
 
         response.sendRedirect("Home/login.jsp");
     }

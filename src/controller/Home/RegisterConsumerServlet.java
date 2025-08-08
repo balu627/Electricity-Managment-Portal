@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.UserDao;
 import bean.CustomerData;
+import controller.MailUtil;
 
 @WebServlet("/RegisterConsumerServlet")
 public class RegisterConsumerServlet extends HttpServlet {
@@ -53,6 +54,16 @@ public class RegisterConsumerServlet extends HttpServlet {
                 int rows = UserDao.addUser(customer);
                 
                 if (rows > 0) {
+                	
+                	 // Send email
+                    String subject = "Thank You for Registering with Us!";
+                    String msg = "Dear " + customer.getTitle() + " " + customer.getCustName() + ",\n\n"
+                               + "Thank you for choosing our service. Your account has been successfully created.\n\n"
+                               + "Regards,Electricty Managment";
+                    
+                    MailUtil.sendEmail(customer.getEmail(), subject, msg);
+                	
+                	
                     request.setAttribute("CUSTOMER_ID", customer.getConsumerId());
                     request.setAttribute("custName", customer.getTitle() + " " + customer.getCustName());
                     request.setAttribute("email", customer.getEmail());

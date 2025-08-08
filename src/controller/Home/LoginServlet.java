@@ -12,7 +12,6 @@ import javax.websocket.Session;
 
 import dao.LoginDao;
 import dao.adminDao;
-//import util.DBUserTableCreator;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -24,21 +23,21 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-//            DBUserTableCreator.createAdminTable();
 
             String result = LoginDao.checklogin(userType, userId, password);
 
-            if (!result.equals("Match") && !result.equals("inactive")) {
+            if (!result.equals("Match") && !result.equals("Inactive")) {
                 request.setAttribute("message", result);
                 request.setAttribute("redirectPage", "Home/login.jsp");
                 request.getRequestDispatcher("Home/message.jsp").forward(request, response);
                 return;
             }
              
-            if(result.equals("inactive"))
+            if(result.equals("Inactive"))
             {
             	request.setAttribute("userId", userId);
             	request.getRequestDispatcher("Profile/Restore.jsp").forward(request, response);
+            	return;
             }
 
             ResultSet rs = LoginDao.getSuccessCredentials(userId, userType);
@@ -58,13 +57,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("message", "Login Success");
                 
                 if (userType.equals("admin")) {
-                	String totalcust = adminDao.getTotalcust();
-                    String pendcomplaints = adminDao.getpendComplaints();
-                    String billsGenerated = adminDao.getBillsGenerated();
-                    session.setAttribute("totalcust", totalcust);
-                    session.setAttribute("pendcomplaints",pendcomplaints);
-                    session.setAttribute("billsGenerated", billsGenerated);
-                    request.setAttribute("redirectPage", "Home/adminhome.jsp");
+                    request.setAttribute("redirectPage", "AdminHomeServlet");
                 } else {
                     request.setAttribute("redirectPage", "Home/home.jsp");
                 }

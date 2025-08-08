@@ -6,7 +6,7 @@
 	
     String user = (String) session.getAttribute("user");
     if (user == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Home/login.jsp");
         return;
     }
     

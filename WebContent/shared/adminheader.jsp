@@ -82,7 +82,7 @@
 <div class="topbar">
     <div class="menu">
         <div class="dropdown">
-            <a href="<%=request.getContextPath()%>/Home/adminhome.jsp">Dashboard</a>
+            <a href="<%=request.getContextPath()%>/AdminHomeServlet">Dashboard</a>
         </div>
         <div class="dropdown">
             <a href="<%=request.getContextPath()%>/Bills/AddBill.jsp">Billing</a>

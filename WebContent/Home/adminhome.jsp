@@ -134,17 +134,17 @@ response.setDateHeader("Expires", 0);
     <div class="feature-card">
         <i class="zmdi zmdi-accounts" style="font-size: 30px; color: #004466;"></i>
         <h4>Total Consumers</h4>
-        <p><%= session.getAttribute("totalcust") %></p>
+        <p><%= request.getAttribute("totalcust") %></p>
     </div>
     <div class="feature-card">
         <i class="zmdi zmdi-alert-triangle" style="font-size: 30px; color: #004466;"></i>
         <h4>Pending Complaints</h4>
-        <p><%= session.getAttribute("pendcomplaints") %></p>
+        <p><%= request.getAttribute("pendcomplaints") %></p>
     </div>
     <div class="feature-card">
         <i class="zmdi zmdi-assignment" style="font-size: 30px; color: #004466;"></i>
         <h4>Bills Generated</h4>
-        <p><%= session.getAttribute("billsGenerated") %></p>
+        <p><%= request.getAttribute("billsGenerated") %></p>
     </div>
 </div>
 
