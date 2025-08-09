@@ -10,7 +10,18 @@ public class Bill {
     private int transactionId;
     private String status;
     private int units;
-
+    private boolean connectionfee;
+    
+    public boolean getConnectionFee()
+    {
+    	return connectionfee;
+    }
+    
+    public void setConnectionFee(boolean connectionfee)
+    {
+    	this.connectionfee = connectionfee;
+    }
+    
     public int getBillNo() {
         return billNo;
     }

@@ -14,7 +14,17 @@ public class CustomerData {
     private String userId;
     private String password;
     private String status;
-
+    private int NewcustId;
+    
+    public int getNewcustId()
+    {
+    	return NewcustId;
+    }
+    
+    public void setNewcustId(int NewcustId)
+    {
+    	this.NewcustId = NewcustId;
+    }
 
     public long getConsumerId() {
         return consumerId;

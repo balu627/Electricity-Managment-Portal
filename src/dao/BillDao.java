@@ -15,9 +15,8 @@ import util.DBConnection;
 
 public class BillDao {
     public static int addBill(Bill bill) {
-        int status = 0;
+        int billNo = 0;
         try {
-//            DBBillTableCreator.createBillTable();
             Connection con = DBConnection.getConnection();
             ResultSet stat = checkMonthBillExists(bill.getConsumerNo(),bill.getMonth());
             if(stat.next())
@@ -27,21 +26,26 @@ public class BillDao {
             else
             {
             	String sql = "INSERT INTO Bill (consumerNo, amount, paidAmount, month, modeOfPayment, paymentTimeDate, transactionId, status,units) VALUES (?, ?,Null, ?, NULL, NULL, NULL, 'unpaid',?)";
-                PreparedStatement ps = con.prepareStatement(sql);
+            	PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1, bill.getConsumerNo());
                 ps.setInt(2, bill.getAmount());
                 String monthInput = bill.getMonth() + "-01";
                 java.sql.Date sqlDate = java.sql.Date.valueOf(monthInput);
                 ps.setDate(3,sqlDate);
                 ps.setInt(4,bill.getUnits());
-                status = ps.executeUpdate();
+                ps.executeUpdate();
+                
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    billNo = rs.getInt(1);
+                }
                 con.close();
             }
        
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return status;
+        return billNo;
     }
     
     public static ResultSet checkMonthBillExists(long ConsumerNo, String month) throws SQLException
@@ -227,5 +231,31 @@ public class BillDao {
         }
         return rs;
 	}
+
+	public String verifybill(int billNo, long consumerId) {
+	    String billmsg = "";
+	    try (Connection con = DBConnection.getConnection()) {
+	        String sql = "SELECT consumerNo FROM Bill WHERE billNo = ?";
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setInt(1, billNo);
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            long dbConsumerNo = rs.getLong("consumerNo");
+	            if (consumerId == dbConsumerNo) {
+	                billmsg = "match";
+	            } else {
+	                billmsg = "Not match";
+	            }
+	        } else {
+	            billmsg = "bill not exist";
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        billmsg = "error";
+	    }
+	    return billmsg;
+	}
+
 
 }

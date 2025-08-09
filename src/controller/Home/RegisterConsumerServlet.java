@@ -18,13 +18,6 @@ public class RegisterConsumerServlet extends HttpServlet {
             throws ServletException, IOException {
         long ConsumerID = Long.parseLong(request.getParameter("ConsumerID"));
         int billNo = Integer.parseInt(request.getParameter("billNo"));
-        String title = request.getParameter("title");
-        String custName = request.getParameter("custName");
-        int age = Integer.parseInt(request.getParameter("custAge"));
-        String email = request.getParameter("email");
-        String countryCode = request.getParameter("countryCode");
-        long mobile = Long.parseLong(request.getParameter("mobile"));
-        String address = request.getParameter("address");
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
@@ -35,31 +28,38 @@ public class RegisterConsumerServlet extends HttpServlet {
             return;
         }
         
+        
         CustomerData customer = new CustomerData();
         customer.setConsumerId(ConsumerID);
         customer.setBillNo(billNo);
-        customer.setTitle(title);
-        customer.setCustName(custName);
-        customer.setAge(age);
-        customer.setEmail(email);
-        customer.setCountryCode(countryCode);
-        customer.setMobile(mobile);
-        customer.setAddress(address);
         customer.setUserId(userId);
         customer.setPassword(password);
-
         try {
+        	
             String isOk = UserDao.checkConstraints(customer);
             if (isOk.equals("ok")) {
-                int rows = UserDao.addUser(customer);
+                int rows = UserDao.RegaddUser(customer);
+                UserDao dao = new UserDao();
+                customer = dao.getUserdetailsUsingConsumerId(ConsumerID);
                 
                 if (rows > 0) {
                 	
                 	 // Send email
-                    String subject = "Thank You for Registering with Us!";
-                    String msg = "Dear " + customer.getTitle() + " " + customer.getCustName() + ",\n\n"
-                               + "Thank you for choosing our service. Your account has been successfully created.\n\n"
-                               + "Regards,Electricty Managment";
+                	String subject = "Welcome to Electricity Management – Your Account is Ready!";
+
+                	String msg = "Dear " + customer.getTitle() + " " + customer.getCustName() + ",\n\n"
+                	           + "Thank you for registering with Electricity Management. "
+                	           + "We are pleased to inform you that your account has been successfully created.\n\n"
+                	           + "From now on, you can:\n"
+                	           + "• View your electricity bills online\n"
+                	           + "• Make secure payments through our website\n"
+                	           + "• Track your payment history anytime\n\n"
+                	           + "Simply log in using your registered credentials to get started.\n\n"
+                	           + "Regards,\n"
+                	           + "Electricity Management Team\n"
+                	           + "-----------------------------------\n"
+                	           + "This is an automated email. Please do not reply.";
+
                     
                     MailUtil.sendEmail(customer.getEmail(), subject, msg);
                 	
@@ -84,5 +84,6 @@ public class RegisterConsumerServlet extends HttpServlet {
             request.setAttribute("errorMessage", "Error: " + e.getMessage());
             request.getRequestDispatcher("Home/consumer_register.jsp").forward(request, response);
         }
+        
     }
 }

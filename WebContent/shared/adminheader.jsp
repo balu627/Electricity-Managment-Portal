@@ -97,6 +97,12 @@
                 <a href="<%=request.getContextPath()%>/Complaint/changestatus.jsp">Resolve Complaint</a>
             </div>
         </div>
+        <div class="dropdown">
+            <a href="<%=request.getContextPath()%>/AdminNewUserDataServlet">New Users</a>
+            <div class="dropdown-content">
+                <a href="<%=request.getContextPath()%>/AdminNewUserDataServlet">New Users</a>
+            </div>
+        </div>
     </div>
 
     <div class="user-info">
