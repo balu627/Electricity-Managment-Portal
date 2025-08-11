@@ -205,40 +205,58 @@
 </div>
 <script>
 function checkallfields(){
-	let title = document.getElementById("title").value;
-	if(!title)
-	{
-		showPopup("Choose the Title","#f44336");
-		return;
-	}
-	let Name = document.getElementById("fullName").value;
-	if(!Name){
-		showPopup("Enter Your Name","#f44336");
-		return;
-	}
-	let email = document.getElementById("email").value;
-	if(!email){
-		showPopup("Enter Your Email","#f44336");
-		return;
-	}
-	let Ccode = document.getElementById("countryCode").value;
-	if(!Ccode){
-		showPopup("Choose Country Code","#f44336");
-		return;
-	}
-	
-	let mobile = document.getElementById("mobile").value;
-	if(!mobile){
-		showPopup("Enter your Mobile Number","#f44336");
-		return;
-	}
-	let address = document.getElementById("address").value;
-	if(!address){
-		showPopup("Enter your Address","#f44336");
-		return;
-	}
-	sendOtp();
+    let title = document.getElementById("title").value;
+    if(!title) {
+        showPopup("Choose the Title","#f44336");
+        return;
+    }
+
+    let Name = document.getElementById("fullName").value.trim();
+    let nameRegex = /^[A-Za-z\s]{1,100}$/;
+    if(!Name) {
+        showPopup("Enter Your Name","#f44336");
+        return;
+    } else if(!nameRegex.test(Name)) {
+        showPopup("Invalid Name! Only letters and spaces allowed.","#f44336");
+        return;
+    }
+
+    let email = document.getElementById("email").value.trim();
+    let emailRegex = /^[0-9A-Za-z.!]+@[a-z]+\.[a-z]{2,}$/;
+    if(!email) {
+        showPopup("Enter Your Email","#f44336");
+        return;
+    } else if(!emailRegex.test(email)) {
+        showPopup("Invalid Email format!","#f44336");
+        return;
+    }
+
+    let Ccode = document.getElementById("countryCode").value;
+    if(!Ccode) {
+        showPopup("Choose Country Code","#f44336");
+        return;
+    }
+    
+    let mobile = document.getElementById("mobile").value.trim();
+    let mobileRegex = /^[6-9]\d{9}$/;
+    if(!mobile) {
+        showPopup("Enter your Mobile Number","#f44336");
+        return;
+    } else if(!mobileRegex.test(mobile)) {
+        showPopup("Invalid Mobile Number!","#f44336");
+        return;
+    }
+
+    let address = document.getElementById("address").value.trim();
+    if(!address) {
+        showPopup("Enter your Address","#f44336");
+        return;
+    }
+
+    // If all validations pass
+    sendOtp();
 }
+
 
 
 function showPopup(message, bgColor = "#4CAF50") {
@@ -289,10 +307,10 @@ function verifyOtp() {
     .then(res => res.json())
     .then(data => {
         if (data.status === "success") {
-            showPopup("OTP verified! Submitting form...", "#4CAF50");
+            showPopup(data.message, "#4CAF50");
             document.querySelector("form").submit();
         } else {
-        	showPopup("Invalid OTP!", "#f44336");
+        	showPopup(data.message, "#f44336");
         }
     });
 }

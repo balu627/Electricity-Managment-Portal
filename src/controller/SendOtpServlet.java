@@ -14,13 +14,22 @@ public class SendOtpServlet extends HttpServlet {
         String email = request.getParameter("email");
         int otp = 100000 + new java.util.Random().nextInt(900000);
         
+        
+        long expiryTime = System.currentTimeMillis() + (5 * 60 * 1000); // 5 minutes
         request.getSession().setAttribute("otp", otp);
+        request.getSession().setAttribute("otpExpiry", expiryTime);
+
         
         // TODO: Send OTP email via JavaMail API here
-        String subject = "OTP To verify Your Mail!";
-        String msg = "Dear Customer, Otp for your mail is here"+otp+".\n"
-                   + "Thank you for choosing our service.\n\n"
-                   + "Regards,Electricty Managment";
+        String subject = "OTP to Verify Your Email";
+
+        String msg = "Dear Customer,\n\n"
+            + "Your One-Time Password (OTP) for email verification is: " + otp + "\n\n"
+            + "Please enter this code on the verification page to complete the process.\n"
+            + "This OTP is valid for a limited time.\n\n"
+            + "Thank you for choosing our service.\n\n"
+            + "Regards,\n"
+            + "Electricity Management Team";
         
         MailUtil.sendEmail(email, subject, msg);
         

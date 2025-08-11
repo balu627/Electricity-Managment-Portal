@@ -220,7 +220,7 @@ response.setDateHeader("Expires", 0);
     outline: none;
 }
 
-#updateSection button {
+#updateSection input[type="submit"] {
     padding: 8px 16px;
     background-color: #3498db;
     color: white;
@@ -231,20 +231,20 @@ response.setDateHeader("Expires", 0);
     transition: background-color 0.3s;
 }
 
-#updateSection button:hover {
+#updateSection input[type="submit"]:hover {
     background-color: #2980b9;
 }
     </style>
 </head>
 <body>
 <jsp:include page="/shared/adminheader.jsp" />
-<h2>Active Complaint History</h2>
+<h2>New User Profile's</h2>
 <div class="table-wrapper">
 <%
     List<CustomerData> users = (List<CustomerData>) request.getAttribute("users");
 %>
 <% if (users == null || users.isEmpty()) { %>
-    <p>No complaints found.</p>
+    <p>No New Users found.</p>
 <% } else { %>
     <table>
         <tr>

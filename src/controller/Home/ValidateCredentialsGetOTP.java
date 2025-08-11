@@ -42,9 +42,14 @@ public class ValidateCredentialsGetOTP extends HttpServlet {
             json.append("\"status\":\"success\",");
             json.append("\"email\":\"").append(email).append("\"");
         } 
+        else if (!"Created".equals(email) && email != null && !"match".equals(billmsg))
+        {
+        	json.append("\"status\":\"error\",");
+            json.append("\"message\":\"Bill No does not match.\"");
+        }
         else if (email == null) {
             json.append("\"status\":\"error\",");
-            json.append("\"message\":\"Register as a new User Again\"");   
+            json.append("\"message\":\"Wrong Credientials\"");   
         }
 
         json.append("}");

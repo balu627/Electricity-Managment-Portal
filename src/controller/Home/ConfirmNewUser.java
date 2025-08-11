@@ -32,7 +32,9 @@ public class ConfirmNewUser extends HttpServlet {
 
 		String msg = "Dear " + customer.getTitle() + " " + customer.getCustName() + ",\n\n"
 		    + "Thank you for choosing our service.\n"
-		    + "We are pleased to inform you that your account has been successfully created.\n\n"
+		    + "Your Consumer Number and Bill Number have been successfully generated.\n"
+		    + "You can now proceed to the next step by registering on our customer portal.\n"
+		    + "During registration, create your username and password, and use the details below:\n\n"
 		    + "Consumer No : " + consumerId + "\n"
 		    + "Bill No     : " + BillNo + "\n\n"
 		    + "Regards,\n"
