@@ -8,6 +8,7 @@ public class MailUtil {
 
     public static void sendEmail(String toEmail, String subject, String messageText) {
         final String fromEmail = "abc@gmail.com";
+        //THANK YOU FOR THE MAIL RECTIFIED 
         final String password = "somecodegivenbyapp"; // Not your Gmail password. Use App Password.
 
         Properties props = new Properties();
